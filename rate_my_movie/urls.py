@@ -16,6 +16,10 @@ Including another URLconf
 from django.conf.urls import url
 from django.contrib import admin
 
+from rate_my_movie_app import views
+
 urlpatterns = [
-    url(r'^admin/', admin.site.urls),
+        #url(r'^$', views.index, name='index'),
+        #url(r'rate_my_movie_app/', include('rate_my_movie_app.urls')),
+        url(r'^admin/', admin.site.urls),
 ]
