@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+
+{% load staticfiles %}
+
+<html>
+	<head>
+		<title>Sign Up</title>
+	</head>
+	<body>
+		<h1>Sign Up</h1>
+		<div>
+			<a href="/rate_my_movie_app/aboutus/">About Us</a><br />
+			<a href="/rate_my_movie_app/mostpopular/">Most Popular</a><br />
+			<a href="/rate_my_movie_app/rumours/">Rumours</a><br />
+			<a href="/rate_my_movie_app/genres/">Genres</a><br />
+			Testing static media below with placeholder for logo<br />
+			<img src="{% static "images/logo.jpg" %}"
+				alt="Rate My Movie Logo" />
+		</div>
+
+
+    <div>
+    {% if registered %}
+      Thank you for registering
+    {% else %}
+      Register here
+
+      <form id="user_form" 
+            method="post" 
+            action="{% url 'register' %}"
+            enctype="multipart/form-data">
+
+     {{ user_form.as_p }}
+     {{ profile_form.as_p }}
+
+     <input type="submit"
+            name="submit"
+            value="register"/>
+      </form>
+      {% endif %}
+                
+    </div>
+	</body>
+</html>

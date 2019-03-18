@@ -1,4 +1,5 @@
 from django.db import models
+from django.template.defaultfilters import slugify
 from django.contrib.auth.models import User
 
 short_char_field = 64
@@ -17,13 +18,18 @@ class UserProfile(models.Model):
 
 class Genre(models.Model):
     genre = models.CharField(max_length=short_char_field)
+    slug = models.SlugField()
+    
+    def save(self, *args, **kwargs):
+        self.slug = slugify(self.genre)
+        super(Genre,self).save(*args, **kwargs)
 
     def __str__(self):
         return f"{self.genre}"
 
 class Movie(models.Model):
     title = models.CharField(max_length=short_char_field)
-    genres = models.ManyToManyField(Genre)
+    genres = models.ManyToManyField(Genre, blank=True)
     uploader_id = models.ForeignKey(UserProfile, 
             on_delete=models.PROTECT)
     description = models.TextField()
@@ -33,9 +39,15 @@ class Movie(models.Model):
     total_rating = models.IntegerField(default=0)
     number_ratings = models.IntegerField(default=0)
 
+    slug = models.SlugField()
+
     thumbnail = models.ImageField(
             upload_to='movie_thumbs', 
             blank=True)
+
+    def save(self, *args, **kwargs):
+        self.slug = slugify(f"{self.title}({self.release_date})")
+        super(Movie,self).save(*args, **kwargs)
     
     def get_average_rating(self):
         return self.total_rating / number_ratings

@@ -133,11 +133,13 @@ def _add_movie(mtuple):
             total_rating=mtuple.total_rating,
             number_ratings=mtuple.number_ratings,
             description=mtuple.description,
-            release_date=mtuple.release_date
-            )[0]
+            release_date=mtuple.release_date)[0]
 
     m.save()
-    m.genres.add(*mtuple.genres)
+    
+    for genre in mtuple.genres:
+        m.genres.add(genre)
+    
     return m
 
 def _add_comment(ctuple):
