@@ -24,7 +24,8 @@ class Genre(models.Model):
 class Movie(models.Model):
     title = models.CharField(max_length=short_char_field)
     genres = models.ManyToManyField(Genre)
-    uploader_id = models.ForeignKey(UserProfile)
+    uploader_id = models.ForeignKey(UserProfile, 
+            on_delete=models.PROTECT)
     description = models.TextField()
     release_date = models.DateField()
     
@@ -43,9 +44,10 @@ class Movie(models.Model):
         return f"{self.title} ({self.release_date})"
 
 class Comment(models.Model):
-    author = models.ForeignKey(UserProfile)
-    movie = models.ForeignKey(Movie)
-    parent = models.ForeignKey(Comment) 
+    author = models.ForeignKey(UserProfile, 
+            on_delete=models.PROTECT)
+    movie = models.ForeignKey(Movie, on_delete=models.PROTECT)
+    parent = models.ForeignKey('self', null=True, on_delete=models.PROTECT) 
     time_stamp = models.DateTimeField()
     body = models.TextField()
 
