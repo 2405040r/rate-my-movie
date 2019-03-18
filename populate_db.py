@@ -50,7 +50,7 @@ def populate():
                 1130,
                 "An American crime film.",
                 [genres[0], genres[1]],
-                datetime.date(1994,5,12)),
+                datetime(1994,5,12)),
               M(
                 'Hot Fuzz',
                 users[1],
@@ -59,7 +59,7 @@ def populate():
                 998,
                 "A British buddy cop film starring Simon Peg",
                 [genres[0], genres[1], genres[2]],
-                datetime.date(2007,2,16))
+                date(2007,2,16))
              ]
 
     movies = [_add_movie(m) for m in movies]
@@ -73,20 +73,20 @@ def populate():
 
     root_comments = [
                      C(
-                         user[0],
-                         movie[0],
+                         users[0],
+                         movies[0],
                          None,
                          "Sooo good!! *****",
-                         datetime.datetime(2019,3,2,12,0,3)),
+                         datetime(2019,3,2,12,0,3)),
                      C(
-                         user[0],
-                         movie[1],
+                         users[0],
+                         movies[1],
                          None,
                          "Bad :(",
-                         datetime.datetime(2019,3,2,12,1,0)),
+                         datetime(2019,3,2,12,1,0)),
                      C(
-                         user[1],
-                         movie[0],
+                         users[1],
+                         movies[0],
                          None,
                          "A little violent ***",
                          datetime(2019,3,1,12,0,1))
@@ -96,11 +96,11 @@ def populate():
 
     child_comments = [
                       C(
-                          user[1],
-                          movie[0],
+                          users[1],
+                          movies[0],
                           root_comments[0],
                           "Biased much...",
-                          datetime.datetime(2019,3,3,6,5,1))
+                          datetime(2019,3,3,6,5,1))
                      ]
 
     child_comments = [_add_comment(c) for c in child_comments]
@@ -110,7 +110,7 @@ def populate():
 def _add_user(utuple):
     u = User.objects.get_or_create(
             username=utuple.name,
-            password_hash=utuple.password)[0]
+            password=utuple.password)[0]
     
     u.save()
 
@@ -121,17 +121,17 @@ def _add_user(utuple):
     return up
 
 def _add_genre(gtuple):
-    g = Genre.objects.get_or_create(name=gtuple.name)[0]
+    g = Genre.objects.get_or_create(genre=gtuple.name)[0]
     g.save()
     return g
 
 def _add_movie(mtuple):
     m = Movie.objects.get_or_create(
             title=mtuple.title,
-            uploader=mtuple.uploader,
+            uploader_id=mtuple.uploader,
             views=mtuple.views,
             total_rating=mtuple.total_rating,
-            number_rating=mtuple.number_rating,
+            number_ratings=mtuple.number_ratings,
             description=mtuple.description,
             release_date=mtuple.release_date
             )[0]
@@ -142,7 +142,7 @@ def _add_movie(mtuple):
 
 def _add_comment(ctuple):
     c = Comment.objects.get_or_create(
-            user=ctuple.user,
+            author=ctuple.user,
             movie=ctuple.movie,
             parent=ctuple.parent,
             body=ctuple.body,
