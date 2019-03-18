@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+
+{% load staticfiles %}
+
+<html>
+	<head>
+		<title>Home</title>
+	</head>
+	<body>
+		<h1>Home page</h1>
+		<div>
+			This is the home page <br />
+		</div>
+		<div>
+			<a href="/rate_my_movie_app/aboutus/">About Us</a><br />
+			<a href="/rate_my_movie_app/mostpopular/">Most Popular</a><br />
+			<a href="/rate_my_movie_app/rumours/">Rumours</a><br />
+			Testing static media below with placeholder for logo<br />
+			<img src="{% static "images/logo.jpg" %}"
+				alt="Rate My Movie Logo" />
+		</div>
+	</body>
+</html>

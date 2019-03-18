@@ -15,11 +15,19 @@ Including another URLconf
 """
 from django.conf.urls import url
 from django.contrib import admin
-
+from django.conf.urls import include
 from rate_my_movie_app import views
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
-        #url(r'^$', views.index, name='index'),
-        #url(r'rate_my_movie_app/', include('rate_my_movie_app.urls')),
+        url(r'^$', views.home, name='home'),
+		url(r'^$', views.aboutus, name='aboutus'),
+		url(r'^$', views.mostpopular, name='mostpopular'),
+		url(r'^$', views.rumours, name='rumours'),
+        url(r'rate_my_movie_app/', include('rate_my_movie_app.urls')),
+		#above maps any URLs starting with ratemymovie/
+		#to the rate_my_movie application
+		
         url(r'^admin/', admin.site.urls),
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -1,4 +1,5 @@
 from django.db import models
+'''
 from django.contrib.auth.models import User
 
 short_char_field = 64
@@ -60,3 +61,4 @@ class Comment(models.Model):
 
     def __str__(self):
         return f"{self.author}@{self.time_stamp}: {self.body}"
+'''
