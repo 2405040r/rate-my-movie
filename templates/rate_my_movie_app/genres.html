@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+
+{% load staticfiles %}
+
+<html>
+	<head>
+		<title>Genres</title>
+	</head>
+	<body>
+		<h1>Genres</h1>
+		<div>
+			This is the Genres page <br />
+		</div>
+		
+		<div>
+			{% if genres %}
+		<ul>
+			{% for genre in genres %}
+				<li>{{ genre.genre }}</li>
+			{% endfor %}
+		</ul>
+		{% else %}
+			<strong>There are no genres present.</strong>
+		{% endif %}
+		</div>
+
+		
+		
+		<div>
+			<a href="/rate_my_movie_app/">Home</a><br />
+		</div>
+	</body>
+</html>
