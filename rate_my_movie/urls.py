@@ -25,6 +25,7 @@ urlpatterns = [
 		url(r'^$', views.aboutus, name='aboutus'),
 		url(r'^$', views.mostpopular, name='mostpopular'),
 		url(r'^$', views.rumours, name='rumours'),
+		url(r'^$', views.genres, name='genres'),
         url(r'rate_my_movie_app/', include('rate_my_movie_app.urls')),
 		#above maps any URLs starting with ratemymovie/
 		#to the rate_my_movie application

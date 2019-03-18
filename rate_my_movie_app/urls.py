@@ -7,4 +7,5 @@ urlpatterns = [
 	url(r'^aboutus/', views.aboutus, name='aboutus'),
 	url(r'^mostpopular/', views.mostpopular, name='mostpopular'),
 	url(r'^rumours/', views.rumours, name='rumours'),
+	url(r'^genres/', views.genres, name='genres'),
 ]
