@@ -41,11 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-<<<<<<< HEAD
     'rate_my_movie_app'
-=======
-	'rate_my_movie_app'
->>>>>>> a681b0f0069ad48823931bd4ae45aa108e9f8a1e
 ]
 
 MIDDLEWARE = [
