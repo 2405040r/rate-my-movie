@@ -54,18 +54,36 @@ def show_genre(request, genre_name_slug):
 	context_dict = {}
 	
 	try:
-		genre = Genre.objects.get(slug=genre_name_slug)
+	    genre = Genre.objects.get(slug=genre_name_slug)
 		
-		movies = Movie.objects.filter(genre=genre)
+	    movies = Movie.objects.filter(genre=genre)
 		
-		context_dict['movies'] = movies
+	    context_dict['movies'] = movies
 		
-		context_dict['genre'] = genre
+	    context_dict['genre'] = genre
 		
-	except Genre.DoesNotExist:
-		
-		context_dict['genre'] = None
-		context_dict['movies'] = None
+	except Genre.DoesNotExist:	
+	    context_dict['genre'] = None
+	    context_dict['movies'] = None
 		
 	return render(request, 'rate_my_movie_app/genre.html', context_dict)
-		
+
+def show_movie(request, movie_slug):
+    context_dict = {}
+
+    try:
+        movie = Movie.objects.get(slug=movie_slug)
+        comments = Comment.objects.filter(movie=movie)
+
+        context_dict['movie'] = movie
+        context_dict['comments'] = comments
+    
+    except Movie.DoesNotExist:
+        context_dict['movie'] = None
+        context_dict['comments'] = None
+
+    return render(request, 
+                  'rate_my_movie_app/movie.html',
+                  context_dict)
+
+

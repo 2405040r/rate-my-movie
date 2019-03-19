@@ -1,0 +1,34 @@
+{% extends "rate_my_movie_app/base.html" %}
+
+{% block title_block %}
+  Movie
+{% endblock %}
+
+{% block body_block %}
+  {% if movie %}
+    <h1>{{ movie.title }}({{ movie.release_date.year }})</h1>
+    <div>
+      <h2> Movie Info </h2>
+      <p>genres: {{ movie.genres }}</p>
+      <p>views: {{ movie.views }} </p>
+      <p>rating: {{ movie.get_average_rating }}</p>
+      <p>{{ movie.description }}</p>
+    </div>
+    {% if comments %}
+      <div>
+        <h2>Comments</h2>
+        {% for comment in comments %}
+          <div>
+            <p> {{ comment.author }}@{{ comment.time_stamp }} said:
+                <br/>
+                {{ comment.body }}
+            </p>
+          </div>
+        {% endfor %}    
+      </div>
+    {% endif %}
+
+  {% else %}
+    The specified movie has not been uploaded.
+  {% endif %}
+{% endblock %}

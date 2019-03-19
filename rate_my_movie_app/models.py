@@ -46,11 +46,11 @@ class Movie(models.Model):
             blank=True)
 
     def save(self, *args, **kwargs):
-        self.slug = slugify(f"{self.title}({self.release_date})")
+        self.slug = slugify(f"{self.title}-{self.release_date.year}")
         super(Movie,self).save(*args, **kwargs)
     
     def get_average_rating(self):
-        return self.total_rating / number_ratings
+        return self.total_rating / self.number_ratings
 
     def __str__(self):
         return f"{self.title} ({self.release_date})"
