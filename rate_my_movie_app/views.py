@@ -38,7 +38,14 @@ def add_movie(request):
         form = MovieForm(request.POST, user=user)
 
         if form.is_valid():
-            movie = form.save(commit=True)
+            movie = form.save(commit=False)
+
+            if 'thumbnail' in request.FILES:
+                movie.thumbnail = request.FILES['thumbnail']
+                
+            movie.save()
+            
+
             return home(request)
         else:
             print(form.errors)
@@ -49,24 +56,25 @@ def add_movie(request):
             {'form': form})
 
 def show_genre(request, genre_name_slug):
-	#Create a context dictionary
-	#Use to pass to the template rendering engine
-	context_dict = {}
-	
-	try:
-	    genre = Genre.objects.get(slug=genre_name_slug)
+    context_dict = {}
+
+    try:
+        genre = Genre.objects.get(slug=genre_name_slug)
+
+        movies = genre.movie_set.all()
+        print(genre, movies)
+
+        context_dict['movies'] = movies
+        context_dict['genre'] = genre
 		
-	    movies = Movie.objects.filter(genre=genre)
-		
-	    context_dict['movies'] = movies
-		
-	    context_dict['genre'] = genre
-		
-	except Genre.DoesNotExist:	
-	    context_dict['genre'] = None
-	    context_dict['movies'] = None
-		
-	return render(request, 'rate_my_movie_app/genre.html', context_dict)
+    except Genre.DoesNotExist:	
+        context_dict['genre'] = None
+        context_dict['movies'] = None
+    
+    return render(
+            request,
+            'rate_my_movie_app/genre.html',
+            context_dict)
 
 def show_movie(request, movie_slug):
     context_dict = {}
