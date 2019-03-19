@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 {% load staticfiles %}
 
-<html>
+<html class="background">
   <head lang="en">
+  <link rel="stylesheet" type="text/css" href="static/css/stylesheet.css" />
     <meta charset="UTF-8" />
     <title
       >
@@ -12,32 +13,21 @@
     </title>
   </head>
 
-  <body>
-    <ul>
-      <li>
-        <a href="/rate_my_movie_app/mostpopular/">Most Popular</a>
-      </li>
-      <li>
-		    <a href="/rate_my_movie_app/genres/">Genres</a>
-      </li>
-      <li>
-		    <a href="/rate_my_movie_app/rumours/">Rumours</a>
-      </li>
-      <li>
-        <a href="{% url 'registration_register' %}">Register</a>
-      </li>
-      <li>
-        <a href="{% url 'auth_login' %}">Login</a>
-      </li>
-      <li>
-        <a href="{% url 'auth_logout' %}?next=/rate_my_movie_app/">Logout</a>
-      </li>
-      <li>
-        <a href="/rate_my_movie_app/aboutus/">About Us</a>
-      </li>
-    </ul>
-
-    <div>
+  <body style="width:75%;margin:auto;margin-top:30px;">
+	
+	<div ><img src="{% static "images/logo.jpg" %}" alt="Rate My Movie Logo" /></div>
+	<div id="menubar">
+		<ul>
+			<li><a href="/rate_my_movie_app/mostpopular/">Most Popular</a></li>
+			<li><a href="/rate_my_movie_app/genres/">Genres</a></li>
+			<li><a href="/rate_my_movie_app/rumours/">Rumours</a></li>
+			<li><a href="/rate_my_movie_app/aboutus/">About Us</a></li>
+			<li class="mnuright"><a href="{% url 'registration_register' %}">Register</a></li>
+			<li class="mnuright"><a href="{% url 'auth_login' %}">Login</a></li>
+			<li class="mnuright"><a href="{% url 'auth_logout' %}?next=/rate_my_movie_app/">Logout</a></li>
+		</ul>
+	</div>
+    <div class="content">
       {% block body_block %}
       {% endblock %}
     </div>
