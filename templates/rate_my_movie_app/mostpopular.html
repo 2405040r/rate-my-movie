@@ -10,4 +10,17 @@
   <div>
     This is the most popular page! <br />
   </div>
+  <div>
+    <div>
+		{% if movies %}
+			<ul>
+				{% for movie in movies %}
+					<li>{{ movie.title }}</li>
+				{% endfor %}
+			</ul>
+			{% else %}
+				<strong>There are no movies present.</strong>
+			{% endif %}
+  </div>
+  
 {% endblock %}

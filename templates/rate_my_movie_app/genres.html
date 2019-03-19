@@ -16,7 +16,9 @@
     {% if genres %}
 		  <ul>
 			  {% for genre in genres %}
-				  <li>{{ genre.genre }}</li>
+				<li>
+				<a href="/rate_my_movie_app/genre/{{ genre.slug }}">{{ genre.genre }}</a>
+				</li>
 			  {% endfor %}
 		  </ul>
 		{% else %}
