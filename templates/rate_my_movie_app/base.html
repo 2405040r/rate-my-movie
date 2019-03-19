@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+
+<html>
+  <head lang="en">
+    <meta charset="UTF-8" />
+    <title
+      >
+      Rate My Movie -
+      {% block title_block %}
+      {% endblock %}
+    </title>
+  </head>
+
+  <body>
+    <ul>
+      <li>
+        <a href="/rate_my_movie_app/mostpopular/">Most Popular</a>
+      </li>
+      <li>
+		    <a href="/rate_my_movie_app/genres/">Genres</a>
+      </li>
+      <li>
+		    <a href="/rate_my_movie_app/rumours/">Rumours</a>
+      </li>
+      <li>
+        <a href="{% url 'registration_register' %}">Register</a>
+      </li>
+      <li>
+        <a href="{% url 'auth_login' %}">Login</a>
+      </li>
+      <li>
+        <a href="{% url 'auth_logout' %}?next=/rate_my_movie_app/">Logout</a>
+      </li>
+      <li>
+        <a href="/rate_my_movie_app/aboutus/">About Us</a>
+      </li>
+    </ul>
+
+    <div>
+      {% block body_block %}
+      {% endblock %}
+    </div>
+  </body>
+</html>

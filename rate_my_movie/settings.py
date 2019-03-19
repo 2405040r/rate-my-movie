@@ -41,7 +41,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'rate_my_movie_app'
+    'rate_my_movie_app',
+    'registration'
 ]
 
 MIDDLEWARE = [
@@ -85,6 +86,14 @@ DATABASES = {
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
+
+# Registration
+REGISTRATION_OPEN = True
+ACCOUNT_ACTIVATION_DAYS = 7
+REGISTRATION_AUTO_LOGIN = True
+LOGIN_REDIRECT_URL = '/rate_my_movie_app/'
+LOGIN_URL = '/accounts/login/'
+
 
 
 # Password validation

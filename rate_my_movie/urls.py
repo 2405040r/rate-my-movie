@@ -19,16 +19,24 @@ from django.conf.urls import include
 from rate_my_movie_app import views
 from django.conf import settings
 from django.conf.urls.static import static
+from registration.backends.simple.views import RegistrationView
+
+class MyRegistrationView(RegistrationView):
+    def get_success_url(self, user):
+        return '/rate_my_movie_app/'
+
+
 
 urlpatterns = [
-        url(r'^$', views.home, name='home'),
-		url(r'^$', views.aboutus, name='aboutus'),
-		url(r'^$', views.mostpopular, name='mostpopular'),
-		url(r'^$', views.rumours, name='rumours'),
-		url(r'^$', views.genres, name='genres'),
-        url(r'rate_my_movie_app/', include('rate_my_movie_app.urls')),
-		#above maps any URLs starting with ratemymovie/
-		#to the rate_my_movie application
-		
-        url(r'^admin/', admin.site.urls),
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+               url(r'^$', 
+                   views.home, name='home'),
+               url(r'rate_my_movie_app/', 
+                   include('rate_my_movie_app.urls')),
+               url(r'accounts/register/$',
+                   MyRegistrationView.as_view(),
+                   name='registration_register'),
+               url(r'accounts/', 
+                   include('registration.backends.simple.urls')),
+	       url(r'^admin/', admin.site.urls),
+             ] + static(settings.MEDIA_URL, 
+                           document_root=settings.MEDIA_ROOT)

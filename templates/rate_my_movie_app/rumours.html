@@ -1,24 +1,20 @@
-<!DOCTYPE html>
-
+{% extends "rate_my_movie_app/base.html" %}
 {% load staticfiles %}
 
-<html>
-	<head>
-		<title>Rumours</title>
-	</head>
-	<body>
+{% block title_block %}
+  Rumours
+{% endblock %}
+	
+{% block body_block  %}
 		<h1>Rumours</h1>
 		<div>
 			This is the rumours page <br />
 		</div>
-    
-    <a class="twitter-timeline" href="https://twitter.com/MoviewebMovies?ref_src=twsrc%5Etfw">Tweets by MoviewebMovies</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+    <div> 
+      <a class="twitter-timeline" 
+         href="https://twitter.com/MoviewebMovies?ref_src=twsrc%5Etfw">Tweets by MoviewebMovies</a> 
+      <script async src="https://platform.twitter.com/widgets.js" 
+                    charset="utf-8"></script>
+    </div>
 
-		<div>
-			<a href="/rate_my_movie_app/">Home</a><br />
-		</div>
-		<div>
-			<a class="twitter-timeline" href="https://twitter.com/MoviewebMovies?ref_src=twsrc%5Etfw">Tweets by MoviewebMovies</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-		</div>
-	</body>
-</html>
+{% endblock %}
