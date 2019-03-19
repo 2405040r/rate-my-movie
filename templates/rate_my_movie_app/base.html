@@ -4,6 +4,7 @@
 <html class="background">
   <head lang="en">
   <link rel="stylesheet" type="text/css" href="{% static "css/stylesheet.css" %}" />
+  <link href="https://fonts.googleapis.com/css?family=ZCOOL+XiaoWei" rel="stylesheet">
     <meta charset="UTF-8" />
     <title
       >
@@ -13,9 +14,9 @@
     </title>
   </head>
 
-  <body style="width:75%;margin:auto;margin-top:30px;">
+  <body style="width:75%;margin:auto;margin-top:0px;">
 	
-	<div ><img src="{% static "images/logo.jpg" %}" alt="Rate My Movie Logo" /></div>
+	<div class="header-background" ><img src="{% static "images/logo.jpg" %}" alt="Rate My Movie Logo" /></div>
 	<div id="menubar">
 		<ul>
 			<li><a href="/rate_my_movie_app/">Home</a></li>
@@ -23,7 +24,7 @@
 			<li><a href="/rate_my_movie_app/genres/">Genres</a></li>
 			<li><a href="/rate_my_movie_app/rumours/">Rumours</a></li>
 			<li><a href="/rate_my_movie_app/aboutus/">About Us</a></li>
-			<li class="mnuright"><a href="{% url 'registration_register' %}">Register</a></li>
+			<li class="mnuright last"><a href="{% url 'registration_register' %}">Register</a></li>
 			<li class="mnuright"><a href="{% url 'auth_login' %}">Login</a></li>
 			<li class="mnuright"><a href="{% url 'auth_logout' %}?next=/rate_my_movie_app/">Logout</a></li>
 		</ul>
