@@ -8,4 +8,5 @@ urlpatterns = [
 	url(r'^mostpopular/', views.mostpopular, name='mostpopular'),
 	url(r'^rumours/', views.rumours, name='rumours'),
 	url(r'^genres/', views.genres, name='genres'),
+        url(r'^add_movie/$', views.add_movie, name='add_movie')
 ]

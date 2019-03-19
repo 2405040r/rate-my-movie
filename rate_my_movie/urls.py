@@ -20,11 +20,21 @@ from rate_my_movie_app import views
 from django.conf import settings
 from django.conf.urls.static import static
 from registration.backends.simple.views import RegistrationView
+from rate_my_movie_app.models import UserProfile
+
 
 class MyRegistrationView(RegistrationView):
+    def register(self, form):
+        new_user = super(MyRegistrationView, self).register(form)
+        profile = UserProfile()
+        profile.user = new_user 
+        profile.save()
+        return new_user
+
+
+
     def get_success_url(self, user):
         return '/rate_my_movie_app/'
-
 
 
 urlpatterns = [
