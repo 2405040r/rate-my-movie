@@ -39,9 +39,6 @@ class MovieForm(forms.ModelForm):
     number_ratings = forms.IntegerField(
               widget=forms.HiddenInput(), 
               initial=0)
-
-
-
     
     slug = forms.CharField(
                     widget=forms.HiddenInput(), 
@@ -49,5 +46,4 @@ class MovieForm(forms.ModelForm):
 
     class Meta:
         model = Movie
-        exclude = ('thumbnail',
-                   'uploader_id',)
+        exclude = ('uploader_id',)
