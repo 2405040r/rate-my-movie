@@ -16,9 +16,21 @@
 
 
 .content{
+	margin:20px 10px 0px 10px;
+	
+	
+}
+
+.content-slice{
 	margin:20px 0px 0px 0px;
 	padding:10px 20px 40px 40px;
 	background-color:#d9d9d9;
+	
+}
+
+
+.content-slice p{
+	font-size:20px;
 }
 
 .header-background{
