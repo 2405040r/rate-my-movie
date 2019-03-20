@@ -14,8 +14,16 @@
 		{% if movies %}
 			<ul>
 			{% for movie in movies %}
+<<<<<<< HEAD
         <li><a href="/rate_my_movie_app/movie/{{ movie.slug }}">
                 {{ movie.title }}</a></li>
+=======
+				<div>
+					<img src="{% static "images/logo.jpg" %}" alt="Rate My Movie Logo" />
+					<a href="/rate_my_movie_app/movie/{{movie.slug}}">
+					{{ movie.title }}
+				</div>
+>>>>>>> 51f41b78819b896c4af8839b70e63af8e065f92a
 			{% endfor %}
 			</ul>
 		{% else %}

@@ -7,11 +7,10 @@
   
 {% block body_block %}
 <div class="content-slice">
-  <h1>Most Popular</h1>
-  <div>
-    <div class="flex-container-wrap">
-		{% if movies %}
-			
+	<h1>Most Popular</h1>
+	<div>
+		<div class="flex-container-wrap">
+			{% if movies %}
 				{% for movie in movies %}
 					<div>
 						<img src="{% static "images/logo.jpg" %}" alt="Rate My Movie Logo" />
@@ -24,7 +23,7 @@
 			{% else %}
 				<strong>There are no movies present.</strong>
 			{% endif %}
-  </div>
-  </div>
+		</div>
+	</div>
   
 {% endblock %}

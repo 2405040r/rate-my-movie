@@ -70,3 +70,14 @@ class CommentForm(forms.ModelForm):
         model = Comment
         exclude = ('author', 'parent', 'time_stamp', 'movie',)
 
+		
+class GenreForm(forms.ModelForm):
+	genre = forms.CharField(max_length=64, help_text="Please enter the genre to be added.")
+	
+	slug = forms.CharField(widget=forms.HiddenInput(), required=False)
+	
+	class Meta:
+		model = Genre
+		fields = ('genre',)
+	
+	

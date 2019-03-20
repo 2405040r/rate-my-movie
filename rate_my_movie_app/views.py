@@ -3,20 +3,22 @@ from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 
 from rate_my_movie_app.models import Genre, Movie, Comment, UserProfile
-from rate_my_movie_app.forms import MovieForm, CommentForm
+from rate_my_movie_app.forms import MovieForm, CommentForm, GenreForm
 
 
 #When the page is requested by the user the corresponding function is called
 
 def home(request):
+	movie_list = Movie.objects.order_by('-views')[:5]
+	context_dict = {'movies': movie_list}
 	#The return statement refers to a html document locates in templates
-	return render(request, 'rate_my_movie_app/home.html')
+	return render(request, 'rate_my_movie_app/home.html', context_dict)
 
 def aboutus(request):
 	return render(request, 'rate_my_movie_app/aboutus.html')
 	
 def mostpopular(request):
-	movie_list = Movie.objects.all() #.order_by('-likes')[:5]
+	movie_list = Movie.objects.order_by('-views').all()
 	context_dict = {'movies': movie_list}
 	
 	return render(request, 'rate_my_movie_app/mostpopular.html', context_dict)
@@ -25,7 +27,7 @@ def rumours(request):
 	return render(request, 'rate_my_movie_app/rumours.html')
 
 def genres(request):
-	genre_list = Genre.objects.all() #.order_by('-likes')[:5]
+	genre_list = Genre.objects.all()
 	context_dict = {'genres': genre_list}
 
 	return render(request, 'rate_my_movie_app/genres.html', context_dict)
@@ -56,6 +58,21 @@ def add_movie(request):
             request, 
             'rate_my_movie_app/add_movie.html',
             {'form': form})
+			
+def add_genre(request):
+	form = GenreForm()
+	
+	if request.method == 'POST':
+		form = GenreForm(request.POST)
+		
+		if form.is_valid():
+			form.save(commit = True)
+			
+			return genres(request)
+		else:
+			print(form.errors)
+	return render(request, 'rate_my_movie_app/add_genre.html', {'form': form})
+
 
 def show_genre(request, genre_name_slug):
     context_dict = {}
