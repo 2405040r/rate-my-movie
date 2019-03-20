@@ -13,10 +13,6 @@ urlpatterns = [
 	url(r'^genre/(?P<genre_name_slug>[\w\-]+)/$',
 		views.show_genre, name='show_genre'),
 
-	
-	url(r'^genre/(?P<genre_name_slug>[\w\-]+)/$',
-		views.show_genre, name='show_genre'),
-
         url(r'movie/(?P<movie_slug>[\w\-]+)/$', 
             views.show_movie, name='show_movie'),
 	
