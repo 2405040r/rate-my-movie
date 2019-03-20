@@ -9,16 +9,16 @@
     <h1>{{ movie.title }}({{ movie.release_date.year }})</h1>
     <div>
       <h2> Movie Info </h2>
-      <img src="/media/movie_thumbs/{{ movie.thumbnail }}"
+      <img src="/media/{{ movie.thumbnail }}"
            alt="This movie doesn't have a thumbnail"/>
-      <p>genres: {{ movie.genres }}</p>
+      <p>genres: {{ movie.get_genres }}</p>
       <p>views: {{ movie.views }} </p>
       <p>rating: {{ movie.get_average_rating }}</p>
       <p>{{ movie.description }}</p>
     </div>
-    {% if comments %}
-      <div>
+    <div>
         <h2>Comments</h2>
+    {% if comments %}
         {% for comment in comments %}
           <div>
             <p> {{ comment.author }}@{{ comment.time_stamp }} said:
@@ -27,7 +27,7 @@
             </p>
           </div>
         {% endfor %}    
-      </div>
+      {% endif %}
       {% if form %}
         <div>
           <form id="comment_id"
@@ -48,9 +48,9 @@
                    name="submit"
                    value="post"/>
           </form>
-      {% endif %}
-    {% endif %}
-
+        </div>
+        {% endif %}
+    </div> 
   {% else %}
     The specified movie has not been uploaded.
   {% endif %}

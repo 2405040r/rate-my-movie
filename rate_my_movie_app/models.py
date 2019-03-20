@@ -52,6 +52,9 @@ class Movie(models.Model):
     def get_average_rating(self):
         return self.total_rating / self.number_ratings if self.number_ratings != 0 else 0
 
+    def get_genres(self):
+        return ', '.join([g.genre for g in self.genres.all()])
+
     def __str__(self):
         return f"{self.title} ({self.release_date})"
 

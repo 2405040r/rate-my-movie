@@ -52,7 +52,7 @@ def populate():
                 "An American crime film.",
                 [genres[0], genres[1]],
                 datetime(1994,5,12),
-                'pulp-fiction.jpg'),
+                'movie_thumbs/pulp-fiction.jpg'),
               M(
                 'Hot Fuzz',
                 users[1],
@@ -62,7 +62,7 @@ def populate():
                 "A British buddy cop film starring Simon Peg",
                 [genres[0], genres[1], genres[2]],
                 date(2007,2,16),
-                'hot-fuzz.jpg'),
+                'movie_thumbs/hot-fuzz.jpg'),
              ]
 
     movies = [_add_movie(m) for m in movies]

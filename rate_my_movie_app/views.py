@@ -58,7 +58,8 @@ def add_movie(request):
             request, 
             'rate_my_movie_app/add_movie.html',
             {'form': form})
-			
+
+@login_required
 def add_genre(request):
 	form = GenreForm()
 	
