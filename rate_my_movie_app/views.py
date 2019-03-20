@@ -4,7 +4,7 @@ from django.contrib.auth.decorators import login_required
 
 from rate_my_movie_app.models import Genre, Movie, Comment, UserProfile
 from rate_my_movie_app.forms import MovieForm, CommentForm, GenreForm
-
+from django.db.models import F
 
 #When the page is requested by the user the corresponding function is called
 
@@ -100,6 +100,9 @@ def show_genre(request, genre_name_slug):
 
 def show_movie(request, movie_slug):
     context_dict = {}
+    
+    
+    
 
     try:
         movie = Movie.objects.get(slug=movie_slug)
@@ -107,8 +110,8 @@ def show_movie(request, movie_slug):
 
         context_dict['movie'] = movie
         context_dict['comments'] = comments
-
-
+        movie.views = movie.views + 1
+        movie.save()
         if  request.user.is_authenticated:
             author = UserProfile.objects.filter(
                     user=request.user)[0]
