@@ -34,6 +34,26 @@
 			{% else %}
 				<strong>There are no genres present.</strong>
 			{% endif %}
+			
+						{% if user.is_authenticated %}
+						<div class="container-thumb" id="thumb-links">
+						<a href="/rate_my_movie_app/add_genre/">
+						
+							<div class="polaroid">
+								<img src="{% static "images/add-image.jpg" %}" alt="Add Genre thumb">
+								<div class="container">
+									<p>Add Genre</p>
+								</div>
+							</div>
+							
+							<div class="overlay-thumb">
+								<div class="text-thumb">Add Genre</div>
+							</div>
+						
+						
+						</a>
+					</div>
+				{% endif %}
 		</div>
 	</div>
 {% endblock %}

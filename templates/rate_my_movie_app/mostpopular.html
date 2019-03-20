@@ -16,7 +16,7 @@
 						<a href="/rate_my_movie_app/movie/{{movie.slug}}">
 						
 							<div class="polaroid">
-								<img src="{% static "images/logo.jpg" %}" alt="{{movie.title}}" style="width:200px">
+								<img src="{% static "images/logo.jpg" %}" alt="{{movie.title}}">
 								<div class="container">
 									<p>{{movie.title}}</p>
 								</div>
@@ -34,6 +34,25 @@
 			{% else %}
 				<strong>There are no movies present.</strong>
 			{% endif %}
+			{% if user.is_authenticated %}
+						<div class="container-thumb" id="thumb-links">
+						<a href="/rate_my_movie_app/add_movie/">
+						
+							<div class="polaroid">
+								<img src="{% static "images/add-image.jpg" %}" alt="Add Movie thumb">
+								<div class="container">
+									<p>Add Movie</p>
+								</div>
+							</div>
+							
+							<div class="overlay-thumb">
+								<div class="text-thumb">Add Movie</div>
+							</div>
+						
+						
+						</a>
+					</div>
+				{% endif %}
 		</div>
 	</div>
   
