@@ -6,21 +6,24 @@
 {% endblock	%}
   
 {% block body_block %}
+<div class="content-slice">
   <h1>Most Popular</h1>
   <div>
-    This is the most popular page! <br />
-  </div>
-  <div>
-    <div>
+    <div class="flex-container-wrap">
 		{% if movies %}
-			<ul>
+			
 				{% for movie in movies %}
-					<li>{{ movie.title }}</li>
+					<div>
+						<img src="{% static "images/logo.jpg" %}" alt="Rate My Movie Logo" />
+						{{ movie.title }}
+					
+					</div>
 				{% endfor %}
-			</ul>
+			
 			{% else %}
 				<strong>There are no movies present.</strong>
 			{% endif %}
+  </div>
   </div>
   
 {% endblock %}
