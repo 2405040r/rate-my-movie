@@ -1,11 +1,8 @@
 from django import forms
-from rate_my_movie_app.models import Movie, Genre
+from rate_my_movie_app.models import Movie, Genre, Comment
 from registration.forms import RegistrationForm
 
-class UserProfileRegistrationForm(RegistrationForm):
-    pass
-
-
+from datetime import datetime
 
 class MovieForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
@@ -47,3 +44,29 @@ class MovieForm(forms.ModelForm):
     class Meta:
         model = Movie
         exclude = ('uploader_id',)
+
+
+class CommentForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        self._author = kwargs.pop('author', None)
+        self._parent = kwargs.pop('parent', None)
+        self._movie = kwargs.pop('movie', None)
+        super(CommentForm, self).__init__(*args, **kwargs)
+
+    def save(self, commit=True):
+        inst = super(CommentForm, self).save(commit=False)
+        inst.author = self._author
+        inst.parent = self._parent
+        inst.time_stamp = datetime.now()
+        inst.movie = self._movie
+
+        if commit:
+            inst.save()
+        return inst
+
+    body = forms.CharField()      
+
+    class Meta:
+        model = Comment
+        exclude = ('author', 'parent', 'time_stamp', 'movie',)
+

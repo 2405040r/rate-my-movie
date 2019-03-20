@@ -1,8 +1,9 @@
 from django.shortcuts import render
 from django.http import HttpResponse
+from django.contrib.auth.decorators import login_required
 
 from rate_my_movie_app.models import Genre, Movie, Comment, UserProfile
-from rate_my_movie_app.forms import MovieForm
+from rate_my_movie_app.forms import MovieForm, CommentForm
 
 
 #When the page is requested by the user the corresponding function is called
@@ -29,6 +30,7 @@ def genres(request):
 
 	return render(request, 'rate_my_movie_app/genres.html', context_dict)
 
+@login_required
 def add_movie(request):
     user = UserProfile.objects.filter(user=request.user)[0]
 
@@ -62,7 +64,6 @@ def show_genre(request, genre_name_slug):
         genre = Genre.objects.get(slug=genre_name_slug)
 
         movies = genre.movie_set.all()
-        print(genre, movies)
 
         context_dict['movies'] = movies
         context_dict['genre'] = genre
@@ -85,13 +86,45 @@ def show_movie(request, movie_slug):
 
         context_dict['movie'] = movie
         context_dict['comments'] = comments
+
+
+        if  request.user.is_authenticated:
+            author = UserProfile.objects.filter(
+                    user=request.user)[0]
+
+            form = CommentForm(
+                    author=author,
+                    parent=None,
+                    movie=movie)
+
+            context_dict['form'] = form
+
+        else:
+            context_dict['form'] = None
+
+
+        if request.method == "POST":
+            form = CommentForm(
+                    request.POST,
+                    author=author,
+                    parent=None,
+                    movie=movie)
+
+            if form.is_valid():
+                comment = form.save(commit=False)
+                comment.save()
+
+            else:
+                print(form.errors)
     
     except Movie.DoesNotExist:
         context_dict['movie'] = None
         context_dict['comments'] = None
+        context_dict['form'] = None
 
     return render(request, 
                   'rate_my_movie_app/movie.html',
                   context_dict)
+
 
 

@@ -22,11 +22,17 @@
 			<li><a href="/rate_my_movie_app/">Home</a></li>
 			<li><a href="/rate_my_movie_app/mostpopular/">Most Popular</a></li>
 			<li><a href="/rate_my_movie_app/genres/">Genres</a></li>
+      {% if user.is_authenticated %}
+        <li><a href="/rate_my_movie_app/add_movie/">Add Movie</a></li>
+      {% endif %}
 			<li><a href="/rate_my_movie_app/rumours/">Rumours</a></li>
 			<li><a href="/rate_my_movie_app/aboutus/">About Us</a></li>
-			<li class="mnuright last"><a href="{% url 'registration_register' %}">Register</a></li>
-			<li class="mnuright"><a href="{% url 'auth_login' %}">Login</a></li>
-			<li class="mnuright"><a href="{% url 'auth_logout' %}?next=/rate_my_movie_app/">Logout</a></li>
+      {% if user.is_authenticated %}
+        <li class="mnuright"><a href="{% url 'auth_logout' %}?next=/rate_my_movie_app/">Logout</a></li>
+      {% else %}
+			  <li class="mnuright last"><a href="{% url 'registration_register' %}">Register</a></li>
+			  <li class="mnuright"><a href="{% url 'auth_login' %}">Login</a></li>
+      {% endif %}
 		</ul>
 	</div>
     <div class="content">
