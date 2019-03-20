@@ -42,10 +42,13 @@ def add_movie(request):
         form = MovieForm(request.POST, user=user)
 
         if form.is_valid():
-            movie = form.save(commit=False)
+            movie = form.save()
 
             if 'thumbnail' in request.FILES:
                 movie.thumbnail = request.FILES['thumbnail']
+
+            for g in form.cleaned_data['genres']:
+                movie.genres.add(g)
                 
             movie.save()
             

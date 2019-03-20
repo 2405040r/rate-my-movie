@@ -21,7 +21,9 @@ class MovieForm(forms.ModelForm):
     title = forms.CharField(max_length=64,
             help_text="Enter the title.")
 
-    genres = forms.ModelMultipleChoiceField(queryset=Genre.objects.all())
+    genres = forms.ModelMultipleChoiceField(
+                   queryset=Genre.objects.all(),
+                   widget=forms.CheckboxSelectMultiple,)
 
     description = forms.CharField(help_text="Enter a brief description.")
     
@@ -43,7 +45,8 @@ class MovieForm(forms.ModelForm):
 
     class Meta:
         model = Movie
-        exclude = ('uploader_id',)
+        exclude = ('uploader_id',
+                   'genres',)
 
 
 class CommentForm(forms.ModelForm):
