@@ -9,6 +9,8 @@
     <h1>{{ movie.title }}({{ movie.release_date.year }})</h1>
     <div>
       <h2> Movie Info </h2>
+      <img src="/media/movie_thumbs/{{ movie.thumbnail }}"
+           alt="This movie doesn't have a thumbnail"/>
       <p>genres: {{ movie.genres }}</p>
       <p>views: {{ movie.views }} </p>
       <p>rating: {{ movie.get_average_rating }}</p>

@@ -50,7 +50,7 @@ class Movie(models.Model):
         super(Movie,self).save(*args, **kwargs)
     
     def get_average_rating(self):
-        return self.total_rating / self.number_ratings
+        return self.total_rating / self.number_ratings if self.number_ratings != 0 else 0
 
     def __str__(self):
         return f"{self.title} ({self.release_date})"
