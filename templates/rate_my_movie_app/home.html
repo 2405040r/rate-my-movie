@@ -19,7 +19,19 @@
 		<h1>Our Top 5 Movies</h1>
 		
 		<div>
-			<p>test module</p>
+			{% if movies %}			
+				{% for movie in movies %}
+					<div>
+						<img src="{% static "images/logo.jpg" %}" alt="Rate My Movie Logo" />
+						<a href="/rate_my_movie_app/movie/{{movie.slug}}">
+						{{ movie.title }}
+					
+					</div>
+				{% endfor %}
+			
+			{% else %}
+				<strong>There are no movies present.</strong>
+			{% endif %}
 		</div>
 	</div>
 {% endblock %}

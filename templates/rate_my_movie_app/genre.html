@@ -14,7 +14,11 @@
 		{% if movies %}
 			<ul>
 			{% for movie in movies %}
-				<li>{{ movie.title }}</li>
+				<div>
+					<img src="{% static "images/logo.jpg" %}" alt="Rate My Movie Logo" />
+					<a href="/rate_my_movie_app/movie/{{movie.slug}}">
+					{{ movie.title }}
+				</div>
 			{% endfor %}
 			</ul>
 		{% else %}
