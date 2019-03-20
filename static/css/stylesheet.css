@@ -133,3 +133,9 @@ div.container {
   text-align: center;
   padding: 20px 0px 20px 0px;
 }
+
+#thumb-links a:link{
+	text-decoration:none;
+	color:black;
+	font-weight:bold;
+}

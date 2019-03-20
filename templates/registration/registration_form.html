@@ -1,9 +1,11 @@
 {% extends "rate_my_movie_app/base.html" %}
 {% block body_block %}
+  <div class="content-slice">
   <h1>Register Here</h1>
   <form method="post" action=".">
     {% csrf_token %}
     {{ form.as_p }}
     <input type="submit" value="Submit" />
   </form>
+  </div>
 {% endblock %}

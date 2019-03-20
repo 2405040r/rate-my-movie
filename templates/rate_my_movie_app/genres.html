@@ -6,25 +6,35 @@
 {% endblock %}
 		
 {% block body_block %}
-<div class="content-slice">
-  <h1>Genres</h1>
-  <div>
-		This is the Genres page <br />
-  </div>
+	<div class="content-slice">
+		<h1>Genres</h1>
 		
-  <div class="flex-container-wrap">
-    {% if genres %}	  
-			  {% for genre in genres %}
-				<div>
-						<img src="{% static "images/logo.jpg" %}" alt="Rate My Movie Logo" />
-						<a href="/rate_my_movie_app/genre/{{ genre.slug }}">{{ genre.genre }}</a>
-					
+		<div class="flex-container-wrap">
+			{% if genres %}			
+				{% for genres in genres %}
+					<div class="container-thumb" id="thumb-links">
+						<a href="/rate_my_movie_app/genre/{{ genre.slug }}">
+						
+							<div class="polaroid">
+								<img src="{% static "images/logo.jpg" %}" alt="{{ genres.genre }}" style="width:200px">
+								<div class="container">
+									<p>{{ genres.genre }}</p>
+								</div>
+							</div>
+							
+							<div class="overlay-thumb">
+								<div class="text-thumb">More...</div>
+							</div>
+						
+						
+						</a>
 					</div>
-			  {% endfor %}
-		  
-		{% else %}
-			<strong>There are no genres present.</strong>
-		{% endif %}
-  </div>
-</div>
+				{% endfor %}
+			
+			{% else %}
+				<strong>There are no genres present.</strong>
+			{% endif %}
+		</div>
+	</div>
 {% endblock %}
+
