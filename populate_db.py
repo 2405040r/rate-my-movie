@@ -40,7 +40,8 @@ def populate():
         'number_ratings',
         'description',
         'genres',
-        'release_date'])
+        'release_date',
+        'thumbnail'])
     movies = [
               M(
                 'Pulp Fiction',
@@ -50,7 +51,8 @@ def populate():
                 1130,
                 "An American crime film.",
                 [genres[0], genres[1]],
-                datetime(1994,5,12)),
+                datetime(1994,5,12),
+                'pulp-fiction.jpg'),
               M(
                 'Hot Fuzz',
                 users[1],
@@ -59,7 +61,8 @@ def populate():
                 998,
                 "A British buddy cop film starring Simon Peg",
                 [genres[0], genres[1], genres[2]],
-                date(2007,2,16))
+                date(2007,2,16),
+                'hot-fuzz.jpg'),
              ]
 
     movies = [_add_movie(m) for m in movies]
@@ -135,6 +138,7 @@ def _add_movie(mtuple):
             description=mtuple.description,
             release_date=mtuple.release_date)[0]
 
+    m.thumbnail=mtuple.thumbnail
     m.save()
     
     for genre in mtuple.genres:
