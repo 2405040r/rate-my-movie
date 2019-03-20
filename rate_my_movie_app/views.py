@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponse
 
 from rate_my_movie_app.models import Genre, Movie, Comment, UserProfile
-from rate_my_movie_app.forms import MovieForm
+from rate_my_movie_app.forms import MovieForm, GenreForm
 
 
 #When the page is requested by the user the corresponding function is called
@@ -56,6 +56,21 @@ def add_movie(request):
             request, 
             'rate_my_movie_app/add_movie.html',
             {'form': form})
+			
+def add_genre(request):
+	form = GenreForm()
+	
+	if request.method == 'POST':
+		form = GenreForm(request.POST)
+		
+		if form.is_valid():
+			form.save(commit = True)
+			
+			return genres(request)
+		else:
+			print(form.errors)
+	return render(request, 'rate_my_movie_app/add_genre.html', {'form': form})
+
 
 def show_genre(request, genre_name_slug):
     context_dict = {}
