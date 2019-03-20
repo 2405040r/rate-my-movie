@@ -80,6 +80,8 @@
   background-color: #111;
 }
 
+
+
 #menubar .active {
   background-color: #4CAF50;
 }
@@ -138,4 +140,9 @@ div.container {
 	text-decoration:none;
 	color:black;
 	font-weight:bold;
+}
+
+.polaroid img{
+	width:200px;
+	height:250px;
 }
