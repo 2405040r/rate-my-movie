@@ -13,7 +13,7 @@
 			{% if genres %}			
 				{% for genres in genres %}
 					<div class="container-thumb" id="thumb-links">
-						<a href="/rate_my_movie_app/genre/{{ genre.slug }}">
+						<a href="/rate_my_movie_app/genre/{{ genres.slug }}">
 						
 							<div class="polaroid">
 								<img src="{% static "images/logo.jpg" %}" alt="{{ genres.genre }}" style="width:200px">
