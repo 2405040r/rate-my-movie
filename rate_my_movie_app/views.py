@@ -76,7 +76,13 @@ def add_genre(request):
 		form = GenreForm(request.POST)
 		
 		if form.is_valid():
-			form.save(commit = True)
+			genre = form.save(commit = True)
+			
+			if 'thumbnail' in request.FILES:
+				genre.thumbnail = request.FILES['thumbnail']
+			
+			genre.save()
+			
 			
 			return genres(request)
 		else:

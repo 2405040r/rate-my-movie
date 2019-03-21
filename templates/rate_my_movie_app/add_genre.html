@@ -11,7 +11,8 @@
   <div>
     <form id="genre_form"
           method="post"
-          action="/rate_my_movie_app/add_genre/">
+          action="/rate_my_movie_app/add_genre/"
+		  enctype="multipart/form-data">
       {% csrf_token %}
       {% for hidden in form.hidden_fields %}
         {{ hidden }}

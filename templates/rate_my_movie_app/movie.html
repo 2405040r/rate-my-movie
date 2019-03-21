@@ -26,12 +26,14 @@
                 <br/>
                 {{ comment.body }}
                 <br/>
-                <button class="create-modal-comment btn btn-primary"
-                        type="button" 
-                        name="button"
-                        data-id="/rate_my_movie_app/create_modal_comment/{{ user.pk }}-{{ comment.pk }}-{{ movie.pk }}/">
-                  Reply
-                </button>
+				{% if user.is_authenticated %}
+					<button class="create-modal-comment btn btn-primary"
+							type="button" 
+							name="button"
+							data-id="/rate_my_movie_app/create_modal_comment/{{ user.pk }}-{{ comment.pk }}-{{ movie.pk }}/">
+					  Reply
+					</button>
+				{% endif %}
             </p>
           </div>
         {% endfor %}    
