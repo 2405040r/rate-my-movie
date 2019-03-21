@@ -1,8 +1,9 @@
 from django import forms
-from rate_my_movie_app.models import Movie, Genre, Comment
+from rate_my_movie_app.models import Movie, Genre, Comment, UserProfile
 from registration.forms import RegistrationForm
-
 from datetime import datetime
+from bootstrap_modal_forms.mixins import PopRequestMixin, CreateUpdateAjaxMixin
+
 
 class MovieForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
@@ -73,6 +74,35 @@ class CommentForm(forms.ModelForm):
         model = Comment
         exclude = ('author', 'parent', 'time_stamp', 'movie',)
 
+class ModalCommentForm(PopRequestMixin, 
+                       CreateUpdateAjaxMixin,
+                       forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        self._author = kwargs.pop('author', None)
+        self._parent = kwargs.pop('parent', None)
+        self._movie = kwargs.pop('movie', None)
+        super(ModalCommentForm, self).__init__(*args, **kwargs)
+
+    def save(self, commit=False):
+        inst = super(ModalCommentForm, self).save(commit=False)
+        
+        inst.author = UserProfile.objects.get(pk=self._author)
+        inst.parent = Comment.objects.get(pk=self._parent)
+        inst.time_stamp = datetime.now()
+        inst.movie = Movie.objects.get(pk=self._movie)
+
+        if not commit:
+            inst.save()
+        return inst
+
+    body = forms.CharField()      
+
+    class Meta:
+        model = Comment
+        exclude = ('author', 'parent', 'time_stamp', 'movie',)
+
+
+
 		
 class GenreForm(forms.ModelForm):
 	genre = forms.CharField(max_length=64, help_text="Please enter the genre to be added.")
@@ -82,5 +112,7 @@ class GenreForm(forms.ModelForm):
 	class Meta:
 		model = Genre
 		fields = ('genre',)
+
+
 	
 	

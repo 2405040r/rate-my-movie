@@ -17,4 +17,8 @@ urlpatterns = [
             views.show_movie, name='show_movie'),
 	
         url(r'^add_movie/$', views.add_movie, name='add_movie'),
+
+        url('^create_modal_comment/(?P<author_id>[\w\-]+)-(?P<parent_id>[\w\-]+)-(?P<movie_id>[\w\-]+)/$', 
+            views.CreateCommentModal.as_view(), 
+            name='create_modal_comment'),
 ]

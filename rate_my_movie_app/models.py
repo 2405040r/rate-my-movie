@@ -69,11 +69,15 @@ class Comment(models.Model):
     def get_indent_level(self):
         indent = 0
         comment = self
-        while comment.parent != null:
+        while comment.parent != None:
             indent += 1
-            comment = parent
+            comment = comment.parent
         
-        return indent 
+        return indent
+
+
+    def as_padding(self):
+        return 20 * self.get_indent_level()
 
     def __str__(self):
         return f"{self.author}@{self.time_stamp}: {self.body}"
