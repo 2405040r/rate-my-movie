@@ -23,9 +23,10 @@
 }
 
 .content-slice{
-	margin:20px 0px 0px 0px;
+	margin:20px 0px 10px 0px;
 	padding:10px 20px 40px 40px;
 	background-color:#d9d9d9;
+	border-radius:6px;
 	
 }
 
@@ -36,7 +37,7 @@
 
 .header-background{
 	padding:15px;
-	background-color:#d9d9d9;
+	background-color:;
 }
 
 * {
@@ -46,6 +47,7 @@
 
 #menubar ul {
   list-style-type: none;
+  border-radius:0px 0px 5px 5px;
   margin: 0;
   padding: 0;
   overflow: hidden;
@@ -151,11 +153,6 @@ div.container {
 	height:250px;
 }
 
-body {
-  padding-top: 40px;
-  padding-bottom: 40px;
-  background-color: #eee;
-}
 
 .form-signin {
   max-width: 330px;
@@ -193,11 +190,6 @@ body {
 
 
 
-body {
-  padding-top: 40px;
-  padding-bottom: 40px;
-  background-color: #eee;
-}
 
 .form-register {
   max-width: 330px;
