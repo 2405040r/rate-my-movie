@@ -34,11 +34,13 @@
         <h2>Comments</h2>
     {% if comments %}
         {% for comment in comments %}
-        <div class="comments" style="margin-left:{{ comment.as_padding }}px;" class="comments">
+		<div class="" style="margin-left:{{ comment.as_padding }}px;margin-bottom:5px" class="comments">
             <p> {{ comment.author }}@{{ comment.time_stamp }} said:
-                <br/>
-                {{ comment.body }}
-                <br/>
+			</div>
+        <div class="comments" style="margin-left:{{ comment.as_padding }}px;" class="comments">
+                
+                <p>{{ comment.body }}</p>
+                
 			
             </p>
           </div>

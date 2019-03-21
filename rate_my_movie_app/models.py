@@ -79,7 +79,7 @@ class Comment(models.Model):
 
 
     def as_padding(self):
-        return 20 * self.get_indent_level()
+        return 50 * self.get_indent_level()
 
     def __str__(self):
         return f"{self.author}@{self.time_stamp}: {self.body}"
