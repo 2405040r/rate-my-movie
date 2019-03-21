@@ -105,25 +105,48 @@ def show_genre(request, genre_name_slug):
             context_dict)
 
 def sort_comments(comments):
-    return comments
+    def by_time(comment):
+        return comment.time_stamp
+
+    def is_root(comment):
+        return comment.parent == None
+
+    def children_of(comment):
+        ret = []
+        for child in sorted(children[comment], key=by_time):
+            ret.append(child)
+            ret.extend(children_of(child))
+        return ret
+
+
+    children = {comment:[child for child in comments 
+                        if child.parent==comment] 
+                for comment in comments}
+
+
+    roots = sorted([comment for comment in comments if is_root(comment)], key=by_time)
+
+    sorted_comments = []
+    for root in roots:
+        sorted_comments.append(root)
+        sorted_comments.extend(children_of(root))
+
+    return sorted_comments
 
 
 def show_movie(request, movie_slug):
     context_dict = {}
     
-    
-    
-
     try:
         movie = Movie.objects.get(slug=movie_slug)
         comments = Comment.objects.filter(movie=movie)
 
         context_dict['movie'] = movie
 
-
         context_dict['comments'] = sort_comments(comments)
         movie.views = movie.views + 1
         movie.save()
+
         if  request.user.is_authenticated:
             author = UserProfile.objects.filter(
                     user=request.user)[0]
@@ -142,7 +165,6 @@ def show_movie(request, movie_slug):
         if request.method == "POST":
             form = CommentForm(
                     request.POST,
-
                     author=author,
                     parent=None,
                     movie=movie)
@@ -150,6 +172,8 @@ def show_movie(request, movie_slug):
             if form.is_valid():
                 comment = form.save(commit=False)
                 comment.save()
+                request.method="GET"
+                return show_movie(request, movie_slug)
 
             else:
                 print(form.errors)

@@ -16,7 +16,7 @@
 						<a href="/rate_my_movie_app/movie/{{movie.slug}}">
 						
 							<div class="polaroid">
-								<img src="{% static "images/logo.jpg" %}" alt="{{movie.title}}">
+                <img src="/media/{{ movie.thumbnail }}/" alt="{{movie.title}}">
 								<div class="container">
 									<p>{{movie.title}}</p>
 								</div>

@@ -22,12 +22,12 @@ def populate():
 
     users = [_add_user(u) for u in users]
 
-    G = namedtuple('G', ['name'])
+    G = namedtuple('G', ['name', 'thumbnail'])
     genres = [
-              G("action"),
-              G("crime"),
-              G("comedy"),
-              G("drama")
+              G("action", "genre_thumbs/action.jpg"),
+              G("crime", "genre_thumbs/crime.jpg"),
+              G("comedy", "genre_thumbs/comedy.jpg"),
+              G("drama", "genre_thumbs/drama.jpg")
              ]
     
     genres = [_add_genre(g) for g in genres] 
@@ -124,7 +124,9 @@ def _add_user(utuple):
     return up
 
 def _add_genre(gtuple):
-    g = Genre.objects.get_or_create(genre=gtuple.name)[0]
+    g = Genre.objects.get_or_create(
+            genre=gtuple.name,
+            thumbnail=gtuple.thumbnail)[0]
     g.save()
     return g
 
