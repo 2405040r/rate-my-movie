@@ -37,7 +37,7 @@
 			<li><a href="/rate_my_movie_app/rumours/">Rumours</a></li>
 			<li><a href="/rate_my_movie_app/aboutus/">About Us</a></li>
       {% if user.is_authenticated %}
-        <li class="mnuright"><a href="{% url 'auth_logout' %}?next=/rate_my_movie_app/">Logout</a></li>
+        <li class="mnuright last"><a href="{% url 'auth_logout' %}?next=/rate_my_movie_app/">Logout</a></li>
       {% else %}
 			  <li class="mnuright last"><a href="{% url 'registration_register' %}">Register</a></li>
 			  <li class="mnuright"><a href="{% url 'auth_login' %}">Login</a></li>

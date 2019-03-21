@@ -15,17 +15,19 @@ class UserProfile(models.Model):
 
     def __str__(self):
         return self.user.username
-
+		
 class Genre(models.Model):
-    genre = models.CharField(max_length=short_char_field)
-    slug = models.SlugField()
-    
-    def save(self, *args, **kwargs):
-        self.slug = slugify(self.genre)
-        super(Genre,self).save(*args, **kwargs)
-
-    def __str__(self):
-        return f"{self.genre}"
+	genre = models.CharField(max_length=short_char_field)
+	slug = models.SlugField()
+	
+	thumbnail = models.ImageField(upload_to='genre_thumbs', blank=True)
+	
+	def save(self, *args, **kwargs):
+		self.slug = slugify(self.genre)
+		super(Genre,self).save(*args, **kwargs)
+	
+	def __str__(self):
+		return f"{self.genre}"
 
 class Movie(models.Model):
     title = models.CharField(max_length=short_char_field)

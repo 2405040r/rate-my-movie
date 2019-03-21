@@ -6,6 +6,7 @@
 
 {% block body_block %}
   {% if movie %}
+  <div class="content-slice">
     <h1>{{ movie.title }}({{ movie.release_date.year }})</h1>
     <div>
       <h2> Movie Info </h2>
@@ -58,6 +59,7 @@
         </div>
         {% endif %}
     </div> 
+	</div>
   {% else %}
     The specified movie has not been uploaded.
   {% endif %}

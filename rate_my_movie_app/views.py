@@ -10,7 +10,7 @@ from collections import defaultdict
 from rate_my_movie_app.models import Genre, Movie, Comment, UserProfile
 from rate_my_movie_app.forms import MovieForm, CommentForm, ModalCommentForm, GenreForm
 from bootstrap_modal_forms.mixins import PassRequestMixin, DeleteAjaxMixin
-
+from django.db.models import F
 
 #When the page is requested by the user the corresponding function is called
 
@@ -110,15 +110,20 @@ def sort_comments(comments):
 
 def show_movie(request, movie_slug):
     context_dict = {}
+    
+    
+    
 
     try:
         movie = Movie.objects.get(slug=movie_slug)
         comments = Comment.objects.filter(movie=movie)
 
         context_dict['movie'] = movie
+
+
         context_dict['comments'] = sort_comments(comments)
-
-
+        movie.views = movie.views + 1
+        movie.save()
         if  request.user.is_authenticated:
             author = UserProfile.objects.filter(
                     user=request.user)[0]

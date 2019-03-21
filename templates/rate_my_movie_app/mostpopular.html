@@ -6,23 +6,53 @@
 {% endblock	%}
   
 {% block body_block %}
-<div class="content-slice">
-	<h1>Most Popular</h1>
-	<div>
+	<div class="content-slice">
+		<h1>Most Popular</h1>
+		
 		<div class="flex-container-wrap">
-			{% if movies %}
+			{% if movies %}			
 				{% for movie in movies %}
-					<div>
-						<img src="{% static "images/logo.jpg" %}" alt="Rate My Movie Logo" />
+					<div class="container-thumb" id="thumb-links">
 						<a href="/rate_my_movie_app/movie/{{movie.slug}}">
-						{{ movie.title }}
-					
+						
+							<div class="polaroid">
+								<img src="{% static "images/logo.jpg" %}" alt="{{movie.title}}">
+								<div class="container">
+									<p>{{movie.title}}</p>
+								</div>
+							</div>
+							
+							<div class="overlay-thumb">
+								<div class="text-thumb">More...</div>
+							</div>
+						
+						
+						</a>
 					</div>
 				{% endfor %}
 			
 			{% else %}
 				<strong>There are no movies present.</strong>
 			{% endif %}
+			{% if user.is_authenticated %}
+						<div class="container-thumb" id="thumb-links">
+						<a href="/rate_my_movie_app/add_movie/">
+						
+							<div class="polaroid">
+								<img src="{% static "images/add-image.jpg" %}" alt="Add Movie thumb">
+								<div class="container">
+									<p>Add Movie</p>
+								</div>
+							</div>
+							
+							<div class="overlay-thumb">
+								<div class="text-thumb">Add Movie</div>
+							</div>
+						
+						
+						</a>
+					</div>
+				{% endif %}
 		</div>
 	</div>
   
