@@ -40,30 +40,37 @@ def genres(request):
 
 @login_required
 def add_movie(request):
-    user = UserProfile.objects.filter(user=request.user)[0]
+	user = UserProfile.objects.filter(user=request.user)[0]
+	
+	form = MovieForm(user=user)
+	
+	if request.method == "POST":
+		form = MovieForm(request.POST, user=user)
+		
+		try:
+			Movie.objects.get(title=request.POST.get('title', 'NULL'))
+			form.add_error(None, "Movie with this title already exists.")
+			
+		except Movie.DoesNotExist:
+			pass
+			
 
-    form = MovieForm(user=user)
-
-    if request.method == "POST":
-        form = MovieForm(request.POST, user=user)
-
-        if form.is_valid():
-            movie = form.save()
-
-            if 'thumbnail' in request.FILES:
-                movie.thumbnail = request.FILES['thumbnail']
-
-            for g in form.cleaned_data['genres']:
-                movie.genres.add(g)
-                
-            movie.save()
-            
-
-            return home(request)
-        else:
-            print(form.errors)
-    
-    return render(
+		if form.is_valid():
+			movie = form.save()
+			
+			if 'thumbnail' in request.FILES:
+				movie.thumbnail = request.FILES['thumbnail']
+				
+			for g in form.cleaned_data['genres']:
+				movie.genres.add(g)
+				
+			movie.save()
+			
+			return mostpopular(request)
+		else:
+			print(form.errors)
+	
+	return render(
             request, 
             'rate_my_movie_app/add_movie.html',
             {'form': form})
@@ -74,6 +81,14 @@ def add_genre(request):
 	
 	if request.method == 'POST':
 		form = GenreForm(request.POST)
+		
+		try:
+			Genre.objects.get(genre=request.POST.get('genre', 'NULL'))
+			form.add_error(None, "This genre already exists.")
+
+		except Genre.DoesNotExist:
+			pass
+			
 		
 		if form.is_valid():
 			genre = form.save(commit = True)
