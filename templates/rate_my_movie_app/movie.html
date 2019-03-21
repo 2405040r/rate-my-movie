@@ -7,16 +7,29 @@
 {% block body_block %}
   {% if movie %}
   <div class="content-slice">
-    <h1>{{ movie.title }}({{ movie.release_date.year }})</h1>
+  
+  <h1>{{ movie.title }}({{ movie.release_date.year }})</h1>
+  <div class="movie-flex">
     <div>
-      <h2> Movie Info </h2>
       <img src="/media/{{ movie.thumbnail }}"
            alt="This movie doesn't have a thumbnail"/>
-      <p>genres: {{ movie.get_genres }}</p>
-      <p>views: {{ movie.views }} </p>
-      <p>rating: {{ movie.get_average_rating }}</p>
-      <p>{{ movie.description }}</p>
+	</div>
+	<div class="genre-info">
+	
+	<h2> Genres:</h2>
+	<div class="genre-flex">
+	{% for genre in movie.genres.all %}
+		<div>{{ genre }}</div>
+	{% endfor %}
     </div>
+
+	
+	<p style="padding-top:25px"><span style="font-size:30px">views:   </span>  {{ movie.views }}</p>
+	<p style="padding-top:15px"><span style="font-size:30px">rating:   </span>  {{ movie.get_average_rating }}</p>
+	<h3 style="padding-top:15px">Description:</h3>  
+	<p class="movie-desc">{{ movie.description }}</p>
+    </div>
+	</div>
     <div>
         <h2>Comments</h2>
     {% if comments %}
