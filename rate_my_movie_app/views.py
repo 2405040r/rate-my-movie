@@ -1,9 +1,15 @@
 from django.shortcuts import render
 from django.http import HttpResponse
+from django.urls import reverse_lazy
+from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib.auth.decorators import login_required
+from django.views import generic
+
+from collections import defaultdict
 
 from rate_my_movie_app.models import Genre, Movie, Comment, UserProfile
-from rate_my_movie_app.forms import MovieForm, CommentForm, GenreForm
+from rate_my_movie_app.forms import MovieForm, CommentForm, ModalCommentForm, GenreForm
+from bootstrap_modal_forms.mixins import PassRequestMixin, DeleteAjaxMixin
 from django.db.models import F
 
 #When the page is requested by the user the corresponding function is called
@@ -98,6 +104,10 @@ def show_genre(request, genre_name_slug):
             'rate_my_movie_app/genre.html',
             context_dict)
 
+def sort_comments(comments):
+    return comments
+
+
 def show_movie(request, movie_slug):
     context_dict = {}
     
@@ -109,7 +119,9 @@ def show_movie(request, movie_slug):
         comments = Comment.objects.filter(movie=movie)
 
         context_dict['movie'] = movie
-        context_dict['comments'] = comments
+
+
+        context_dict['comments'] = sort_comments(comments)
         movie.views = movie.views + 1
         movie.save()
         if  request.user.is_authenticated:
@@ -130,6 +142,7 @@ def show_movie(request, movie_slug):
         if request.method == "POST":
             form = CommentForm(
                     request.POST,
+
                     author=author,
                     parent=None,
                     movie=movie)
@@ -150,5 +163,22 @@ def show_movie(request, movie_slug):
                   'rate_my_movie_app/movie.html',
                   context_dict)
 
+
+class CreateCommentModal(PassRequestMixin, generic.CreateView):
+    template_name = 'rate_my_movie_app/create_comment_modal.html'
+    form_class = ModalCommentForm
+
+    def get_form_kwargs(self):
+        kwargs = super(CreateCommentModal, self).get_form_kwargs()
+        kwargs.update({
+            "author":self.kwargs['author_id'],
+            "parent":self.kwargs['parent_id'],
+            "movie":self.kwargs['movie_id']})
+
+        return kwargs
+
+    def get_success_url(self):
+        movie = Movie.objects.get(pk=self.kwargs['movie_id'])
+        return "/rate_my_movie_app/movie/" + movie.slug + "/"
 
 
