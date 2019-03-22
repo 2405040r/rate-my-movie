@@ -1,43 +1,35 @@
 {% extends "rate_my_movie_app/base.html" %}
 {% load staticfiles %}
+{% load crispy_forms_tags %}
 
 {% block title_block %}
-  Upload Movie
+  Add Genre
 {% endblock %}
 
+
+<head>
+  
+  <link href="https://fonts.googleapis.com/css?family=ZCOOL+XiaoWei" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="{% static "css/authforms.css" %}" />
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+  </head>
 {% block body_block %}
-<div class="content-slice">
+<div class="flex-container-form">
+<div class="content-slice addpages">
   <h1> Add a Genre </h1> 
-  <div>
-    <form id="genre_form"
-          method="post"
-          action="/rate_my_movie_app/add_genre/"
-		  enctype="multipart/form-data">
-      {% csrf_token %}
-	  
-	  {% if form.non_field_errors %}
-	    <div class="non-field-errors">
-	      {% for err in form.non_field_errors %}
-	        <p class = "form-error">{{ err }}</p>
-	      {% endfor %}
-	    </div>
-     {% endif %}
-	  
-      {% for hidden in form.hidden_fields %}
-        {{ hidden }}
-      {% endfor %}
-      {% for field in form.visible_fields %}
-        <div>
-          {{ field.errors }}
-          {{ field.help_text }}
-          {{ field }}
-        </div>
-      {% endfor %}
-      <input type="submit"
-             name="submit"
-             value="Create Genre"/>
-    </form>
+<div class="authforms" style="width:100%">
+  <form method="post" novalidate>
+    {% csrf_token %}
+    {{ form|crispy }}
+	</br>
+	</br>
+    <button type="submit" class="btn btn-success" style="padding:5px 20px 5px 20px;font-size:25px">Add Genre</button>
+  </form>
   </div>
- </div>
+  </div>
+  </div>
 {% endblock %}
+
 

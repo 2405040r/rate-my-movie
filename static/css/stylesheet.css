@@ -1,5 +1,34 @@
-.authforms{
-	font-size:30px;
+.addpages{
+	font-size:20px;
+}
+
+.form-check-label{
+	line-height:18px !important;
+	background-color:lightblue;
+	padding:10px 10px 10px 30px;
+	border-radius:5px
+}
+
+
+.form-check{
+	float:left;
+	padding:0px;
+}
+
+.genre-flex {
+  display: flex;
+  flex-wrap: wrap;
+  background-color: ;
+  justify-content:left;
+}
+
+
+ .genre-flex > div {
+  background-color: lightblue;
+  border-radius:5px;
+  margin: 2px;
+  text-align: center;
+  padding:5px 10px 5px 10px;
 }
 
 
@@ -16,6 +45,21 @@
   width: 200px;
   margin: 10px;
   text-align: center;
+}
+
+.flex-container-form {
+  display: flex;
+  flex-wrap: wrap;
+  background-color: ;
+  justify-content:center;
+}
+
+
+ .flex-container-form > div {
+  background-color: ;
+  width: 600px;
+  margin: 10px;
+  text-align: left;
 }
 
 
@@ -45,21 +89,6 @@
   padding:30px;
 }
 
-.genre-flex {
-  display: flex;
-  flex-wrap: wrap;
-  background-color: ;
-  justify-content:left;
-}
-
-
- .genre-flex > div {
-  background-color: lightblue;
-  border-radius:5px;
-  margin: 2px;
-  text-align: center;
-  padding:5px 10px 5px 10px;
-}
 
 .genre-info{
 	text-align:left !important;
@@ -81,6 +110,12 @@
 	
 }
 
+
+body{
+	background-image: url("{% static "images/site-background.jpg" %}");	
+}
+
+
 .comments{
 	background-color:#0099ff;
 	color:white;
@@ -96,7 +131,7 @@
 .content-slice{
 	margin:20px 0px 10px 0px;
 	padding:10px 20px 40px 40px;
-	background-color:#d9d9d9;
+	background-color:lightgray;
 	border-radius:6px;
 	
 }
