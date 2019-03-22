@@ -30,11 +30,8 @@
 						</a>
 					</div>
 				{% endfor %}
-			
-			{% else %}
-				<strong>There are no movies present.</strong>
-			{% endif %}
-			{% if user.is_authenticated %}
+				
+				{% if user.is_authenticated %}
 						<div class="container-thumb" id="thumb-links">
 						<a href="/rate_my_movie_app/add_movie/">
 						
@@ -53,6 +50,11 @@
 						</a>
 					</div>
 				{% endif %}
+			
+			{% else %}
+				<strong>There are no movies present, <a href="/rate_my_movie_app/add_movie/">post your movies here!</a></strong>
+			{% endif %}
+			
 		</div>
 	</div>
   

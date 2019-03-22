@@ -1,7 +1,7 @@
 from django.conf.urls import url
 from rate_my_movie_app import views
 
-
+#Maps out the urls for the websites so that links redirect correctly
 urlpatterns = [
 	url(r'^$', views.home, name='home'),
 	url(r'^aboutus/', views.aboutus, name='aboutus'),

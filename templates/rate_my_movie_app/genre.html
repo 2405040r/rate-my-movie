@@ -7,19 +7,33 @@
 		
 {% block body_block %}
 
-<div class="content-slice"> 		
-  <div>
+<div class="content-slice"> 	
+<h1>{{ genre.genre }}</h1>	
+  <div class="flex-container-wrap">
     {% if genre %}
-		<h1>{{ genre.genre }}</h1>
+		
 		{% if movies %}
-			<ul>
+			
 			{% for movie in movies %}
-				<div>
-					<img src="{% static "images/logo.jpg" %}" alt="Rate My Movie Logo" />
-        <a href="/rate_my_movie_app/movie/{{ movie.slug }}">{{ movie.title }}</a>
-				</div>
-			{% endfor %}
-			</ul>
+					<div class="container-thumb" id="thumb-links">
+						<a href="/rate_my_movie_app/movie/{{movie.slug}}">
+						
+							<div class="polaroid">
+                <img src="/media/{{ movie.thumbnail }}" alt="{{movie.title}}" style="width:200px">
+								<div class="container">
+									<p>{{movie.title}}</p>
+								</div>
+							</div>
+							
+							<div class="overlay-thumb">
+								<div class="text-thumb">More...</div>
+							</div>
+						
+						
+						</a>
+					</div>
+				{% endfor %}
+			
 		{% else %}
 			<strong>There are no movies present.</strong>
 		{% endif %}

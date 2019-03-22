@@ -11,8 +11,18 @@
   <div>
     <form id="genre_form"
           method="post"
-          action="/rate_my_movie_app/add_genre/">
+          action="/rate_my_movie_app/add_genre/"
+		  enctype="multipart/form-data">
       {% csrf_token %}
+	  
+	  {% if form.non_field_errors %}
+	    <div class="non-field-errors">
+	      {% for err in form.non_field_errors %}
+	        <p class = "form-error">{{ err }}</p>
+	      {% endfor %}
+	    </div>
+     {% endif %}
+	  
       {% for hidden in form.hidden_fields %}
         {{ hidden }}
       {% endfor %}
