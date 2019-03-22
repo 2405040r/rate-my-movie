@@ -113,7 +113,12 @@
 	
 }
 
-
+body{
+	background-image: url('/static/images/site-background.jpg');
+	background-repeat: no-repeat;
+  background-attachment: fixed;
+  width:100%;
+}
 
 
 .comments{
