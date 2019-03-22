@@ -20,7 +20,10 @@
 <div class="content-slice addpages">
   <h1> Add a Genre </h1> 
 <div class="authforms" style="width:100%">
-  <form method="post" novalidate>
+  <form id="genre_form"
+        method="post"
+        action="/rate_my_movie_app/add_genre/"
+        enctype="multipart/form-data">
     {% csrf_token %}
     {{ form|crispy }}
 	</br>

@@ -20,14 +20,17 @@
 <div class="content-slice addpages">
   <h1> Add a Movie </h1> 
 <div class="authforms" style="width:100%">
-  <form method="post" novalidate>
+  <form id="movie-form" 
+        method="post"
+        action="/rate_my_movie_app/add_movie/"
+        enctype="multipart/form-data">
     {% csrf_token %}
     {{ form|crispy }}
 	</br>
 	</br>
     <button type="submit" class="btn btn-success" style="padding:5px 20px 5px 20px;font-size:25px">Add Movie</button>
-  </form>
-  </div>
+    </form>
+    </div>
   </div>
   </div>
 {% endblock %}
