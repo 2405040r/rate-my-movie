@@ -38,10 +38,8 @@ class MyRegistrationView(RegistrationView):
 
 
 urlpatterns = [
-               url(r'^$', 
-                   views.home, name='home'),
-               url(r'rate_my_movie_app/', 
-                   include('rate_my_movie_app.urls')),
+               url(r'^$', views.home, name='home'),
+               url(r'rate_my_movie_app/', include('rate_my_movie_app.urls')),
                url(r'accounts/register/$',
                    MyRegistrationView.as_view(),
                    name='registration_register'),
