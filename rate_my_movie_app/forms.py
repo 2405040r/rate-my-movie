@@ -18,7 +18,8 @@ class MovieForm(forms.ModelForm):
             inst.save()
         return inst
 
-
+	#Lists the information required for a page about the movie to be created
+	
     title = forms.CharField(max_length=64,
             help_text="Enter the title.")
 
@@ -44,8 +45,11 @@ class MovieForm(forms.ModelForm):
                     widget=forms.HiddenInput(), 
                     required=False)
 
+	#Used to provide additional information of the form
     class Meta:
+		#provides an assoication between the Movie form and the model Movie
         model = Movie
+		#Decides which fields are excluded from the form
         exclude = ('uploader_id',
                    'genres',)
 
