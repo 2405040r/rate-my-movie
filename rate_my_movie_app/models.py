@@ -3,8 +3,13 @@ from django.template.defaultfilters import slugify
 from django.contrib.auth.models import User
 
 short_char_field = 64
-#The entity which handles all of the data relating to a user
 class UserProfile(models.Model):
+    """
+       User profile 
+       Each profile has an associated user model from registration redux
+       Profile pictures is not yet implemented
+    """
+
     user = models.OneToOneField(
             User,
             on_delete=models.CASCADE)
@@ -18,24 +23,28 @@ class UserProfile(models.Model):
 
 		
 class Genre(models.Model):
-	genre = models.CharField(max_length=short_char_field)
-	#Used to make a suitable Url based on the genre name
-	slug = models.SlugField()
+    """
+      Model for genre
+    """
+    genre = models.CharField(max_length=short_char_field)
+    slug = models.SlugField()
 	
-	thumbnail = models.ImageField(upload_to='genre_thumbs', blank=True)
+    thumbnail = models.ImageField(upload_to='genre_thumbs', blank=True)
 	
-	def save(self, *args, **kwargs):
-		self.slug = slugify(self.genre)
-		super(Genre,self).save(*args, **kwargs)
+    def save(self, *args, **kwargs):
+	self.slug = slugify(self.genre)
+	super(Genre,self).save(*args, **kwargs)
 	
-	def __str__(self):
-		return f"{self.genre}"
+    def __str__(self):
+	return f"{self.genre}"
 
 class Movie(models.Model):
+    """
+       Movie model
+    """
+
     title = models.CharField(max_length=short_char_field)
 	
-	#Many to many field used here as many genres
-	#relate to many movies and vice versa
     genres = models.ManyToManyField(Genre, blank=True)
     uploader_id = models.ForeignKey(UserProfile, 
             on_delete=models.PROTECT)
@@ -56,20 +65,26 @@ class Movie(models.Model):
         self.slug = slugify(f"{self.title}-{self.release_date.year}")
         super(Movie,self).save(*args, **kwargs)
     
-	#Returns the average rating based on the sum of the ratings and the number
-	#of people to sumbit a rating. If 0 people have rated 0 is returns to avoid
-	#an error relating to division by 0
     def get_average_rating(self):
+        """
+	Returns the average rating of the movie if 0 people have 
+        rated a movie then returns 0 
+        """
         return self.total_rating / self.number_ratings if self.number_ratings != 0 else 0
 	
-	#Concatentates the genres of a movie into a list
     def get_genres(self):
+        """
+           returns the list of genres as a string
+        """
         return ', '.join([g.genre for g in self.genres.all()])
 
     def __str__(self):
         return f"{self.title} ({self.release_date})"
 
 class Comment(models.Model):
+    """
+        Comment model
+    """
     author = models.ForeignKey(UserProfile, 
             on_delete=models.PROTECT)
     movie = models.ForeignKey(Movie, on_delete=models.PROTECT)
@@ -77,8 +92,10 @@ class Comment(models.Model):
     time_stamp = models.DateTimeField()
     body = models.TextField()
 
-	#called if the comment being added is a reply to indent it into the page
     def get_indent_level(self):
+        """
+            allow for replies to be properly indented
+        """
         indent = 0
         comment = self
         while comment.parent != None:
@@ -87,8 +104,10 @@ class Comment(models.Model):
         
         return indent
 
-	#used to modify the scale of the indent
     def as_padding(self):
+	""" 
+            Used to modify the scale of the indent 
+        """
         return 50 * self.get_indent_level()
 
     def __str__(self):

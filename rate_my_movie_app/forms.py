@@ -6,6 +6,9 @@ from bootstrap_modal_forms.mixins import PopRequestMixin, CreateUpdateAjaxMixin
 
 
 class MovieForm(forms.ModelForm):
+    """
+       Form for creating a new movie
+    """
     def __init__(self, *args, **kwargs):
         self._user = kwargs.pop('user')
         super(MovieForm, self).__init__(*args, **kwargs)
@@ -18,7 +21,6 @@ class MovieForm(forms.ModelForm):
             inst.save()
         return inst
 
-	#Lists the information required for a page about the movie to be created
 	
     title = forms.CharField(max_length=64,
             help_text="Enter the title.")
@@ -45,16 +47,16 @@ class MovieForm(forms.ModelForm):
                     widget=forms.HiddenInput(), 
                     required=False)
 
-	#Used to provide additional information of the form
     class Meta:
-		#provides an assoication between the Movie form and the model Movie
         model = Movie
-		#Decides which fields are excluded from the form
         exclude = ('uploader_id',
                    'genres',)
 
 
 class CommentForm(forms.ModelForm):
+    """
+       Form for creating a root comment on a movie page
+    """
     def __init__(self, *args, **kwargs):
         self._author = kwargs.pop('author', None)
         self._parent = kwargs.pop('parent', None)
@@ -81,6 +83,11 @@ class CommentForm(forms.ModelForm):
 class ModalCommentForm(PopRequestMixin, 
                        CreateUpdateAjaxMixin,
                        forms.ModelForm):
+
+    """
+       modal form for creating a reply to another comment(replies are themselves comments) on a movie page.
+    """
+
     def __init__(self, *args, **kwargs):
         self._author = kwargs.pop('author', None)
         self._parent = kwargs.pop('parent', None)
@@ -109,13 +116,17 @@ class ModalCommentForm(PopRequestMixin,
 
 		
 class GenreForm(forms.ModelForm):
-	genre = forms.CharField(max_length=64, help_text="Please enter the genre to be added.")
+    """
+        Form for creating a new genre
+
+    """
+    genre = forms.CharField(max_length=64, help_text="Please enter the genre to be added.")
 	
-	slug = forms.CharField(widget=forms.HiddenInput(), required=False)
+    slug = forms.CharField(widget=forms.HiddenInput(), required=False)
 	
-	class Meta:
-		model = Genre
-		exclude = ()
+    class Meta:
+	model = Genre
+	exclude = ()
 
 
 	

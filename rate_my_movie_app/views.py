@@ -5,55 +5,73 @@ from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib.auth.decorators import login_required
 from django.views import generic
 
-from collections import defaultdict
-
 from rate_my_movie_app.models import Genre, Movie, Comment, UserProfile
 from rate_my_movie_app.forms import MovieForm, CommentForm, ModalCommentForm, GenreForm
 from bootstrap_modal_forms.mixins import PassRequestMixin, DeleteAjaxMixin
 from django.db.models import F
 
-#When the page is requested by the user the corresponding function is called
 
 def home(request):
-	#the webpage takes this info and uses it to show the top 5 most viewed pages 
-	movie_list = Movie.objects.order_by('-views')[:5]
-	context_dict = {'movies': movie_list}
-	#The return statement refers to a html document located in templates
-	return render(request, 'rate_my_movie_app/home.html', context_dict)
+    """
+    Handles the display of the home page which contains the top 5 most viewed pages 
+    """
+    
+    movie_list = Movie.objects.order_by('-views')[:5]
+    context_dict = {'movies': movie_list}
+    
+    return render(request, 'rate_my_movie_app/home.html', context_dict)
+
 
 def aboutus(request):
-	return render(request, 'rate_my_movie_app/aboutus.html')
+    """
+        ABOUT US
+    """
+
+    return render(request, 'rate_my_movie_app/aboutus.html')
 	
 def mostpopular(request):
-	#the webpage takes this info and uses it to show the most viewed pages 
+	"""
+          Handles the webpage the display of most viewed pages
+        """
 	movie_list = Movie.objects.order_by('-views').all()
 	context_dict = {'movies': movie_list}
 	
 	return render(request, 'rate_my_movie_app/mostpopular.html', context_dict)
 
+"""
+   RUMOURS
+"""
 def rumours(request):
 	return render(request, 'rate_my_movie_app/rumours.html')
 
 def genres(request):
-	#used to display the various film genre on the page
+        """
+	   Handles display of the genres
+        """
+
 	genre_list = Genre.objects.all()
 	context_dict = {'genres': genre_list}
 
 	return render(request, 'rate_my_movie_app/genres.html', context_dict)
 
+
 @login_required
 def add_movie(request):
-	#Checks which user is looking to add a movie
-	user = UserProfile.objects.filter(user=request.user)[0]
+        """
+            ADD MOVIE
+
+            Handles user creation of new movies
+
+        """
+	# get the user profile of the user making the request
+        user = UserProfile.objects.filter(user=request.user)[0]
 	
-	#Calls the MovieForm in forms.py assigning it to the user creating the form
 	form = MovieForm(user=user)
-	
-	#Should the user press press the button to add a movie the if statement will be entered
+
 	if request.method == "POST":
 		form = MovieForm(request.POST, user=user)
 		
-		#Will check to ensure the movie does not already exist in the database
+		# Check the movie does not already exist in the database
 		try:
 			Movie.objects.get(title=request.POST.get('title', 'NULL'))
 			form.add_error(None, "Movie with this title already exists.")
@@ -61,43 +79,42 @@ def add_movie(request):
 		except Movie.DoesNotExist:
 			pass
 			
-		#Checks the form has been filled in correctly
 		if form.is_valid():
-			#Save the new movie to the database
 			movie = form.save()
 			
-			#Adds the thumbnail to the media folder
+			# Add the movie thumbnail 
 			if 'thumbnail' in request.FILES:
 				movie.thumbnail = request.FILES['thumbnail']
 			
-			#Adds all of the chosen genres for the movie to its record
+			# Adds all of the chosen genres for the movie to its record
 			for g in form.cleaned_data['genres']:
 				movie.genres.add(g)
 			
-			#Saves the above mentioned changes
 			movie.save()
 			
-			#Redirect the user to the most popular page
-			#where their movie will now be present
+			#Redirect the user to the most popular page where their movie will now be present
 			return mostpopular(request)
 		else:
-			#prints errors to terminal
 			print(form.errors)
-	#Returns as normal or returns the new form
-	#or form containing errors with error messages
 	return render(
             request, 
             'rate_my_movie_app/add_movie.html',
             {'form': form})
 
+
 @login_required
 def add_genre(request):
+"""
+  ADD GENRE
+
+  Handles the user creation of new genres
+"""
 	form = GenreForm()
 	
 	if request.method == 'POST':
 		form = GenreForm(request.POST)
 		
-		#Ensures the genre does not already exist
+		#  Ensures the genre does not already exist
 		try:
 			Genre.objects.get(genre=request.POST.get('genre', 'NULL'))
 			form.add_error(None, "This genre already exists.")
@@ -122,7 +139,13 @@ def add_genre(request):
 	return render(request, 'rate_my_movie_app/add_genre.html', {'form': form})
 
 
+
 def show_genre(request, genre_name_slug):
+"""
+  SHOW GENRE
+
+  view function renders the selected genre to the user
+"""
     context_dict = {}
 
 	#Attempt to get the movies to be displayed on the page
@@ -144,7 +167,25 @@ def show_genre(request, genre_name_slug):
             'rate_my_movie_app/genre.html',
             context_dict)
 
+
 def sort_comments(comments):
+"""
+  HELPER METHOD
+
+  Orders (example below) so that they can be iterated and output in the template
+
+  For a comment tree:
+
+  - ROOT 1 
+  -- CHILD 1
+  --- GRANDCHILD 1
+  -- CHILD 2
+  - ROOT 2
+  -ROOT 3
+
+  Method will return [ROOT1, CHILD1, GRANDCHILD 1, CHILD 2, ROOT 2, ROOT 3]
+
+"""
     def by_time(comment):
         return comment.time_stamp
 
@@ -152,6 +193,10 @@ def sort_comments(comments):
         return comment.parent == None
 
     def children_of(comment):
+        """
+          recursive function 
+          gathers the children and children of children ... etc. of comment passed as param, returns them in the ordering specified above 
+        """
         ret = []
         for child in sorted(children[comment], key=by_time):
             ret.append(child)
@@ -159,11 +204,12 @@ def sort_comments(comments):
         return ret
 
 
+    # create a dictionary of {parent : [list of its children]}
     children = {comment:[child for child in comments 
                         if child.parent==comment] 
                 for comment in comments}
 
-
+    # get the root comments and order by time_stamp
     roots = sorted([comment for comment in comments if is_root(comment)], key=by_time)
 
     sorted_comments = []
@@ -174,10 +220,17 @@ def sort_comments(comments):
     return sorted_comments
 
 
+
+
 def show_movie(request, movie_slug):
+    """
+       SHOW MOVIE
+
+       Method for displaying a particular movie page to the user
+    """
     context_dict = {}
     
-	#Attempt to retrieve the data to be displayed on the movies page
+	#  Attempt to retrieve the data to be displayed on the movies page
     try:
         movie = Movie.objects.get(slug=movie_slug)
         comments = Comment.objects.filter(movie=movie)
@@ -188,7 +241,7 @@ def show_movie(request, movie_slug):
         movie.views = movie.views + 1
         movie.save()
 
-		#If the user is logged in allow him to comment and reply to comments
+		#  If the user is logged in allow them to comment and reply to comments
         if  request.user.is_authenticated:
             author = UserProfile.objects.filter(
                     user=request.user)[0]
@@ -203,7 +256,7 @@ def show_movie(request, movie_slug):
         else:
             context_dict['form'] = None
 
-		#Runs if the user posts a comment
+	#  if the user posts the comment form
         if request.method == "POST":
             form = CommentForm(
                     request.POST,
@@ -211,7 +264,6 @@ def show_movie(request, movie_slug):
                     parent=None,
                     movie=movie)
 			
-			#Ensures the comment matches criteria
             if form.is_valid():
                 comment = form.save(commit=False)
                 comment.save()
@@ -231,11 +283,21 @@ def show_movie(request, movie_slug):
                   context_dict)
 
 
+
 class CreateCommentModal(PassRequestMixin, generic.CreateView):
+    """
+        CREATE REPLY MODAL
+
+        Class based view for the creation of replies to comments on         a movie page
+    """
     template_name = 'rate_my_movie_app/create_comment_modal.html'
     form_class = ModalCommentForm
 
+   
     def get_form_kwargs(self):
+        """
+          pass arguments to the form from the url
+        """
         kwargs = super(CreateCommentModal, self).get_form_kwargs()
         kwargs.update({
             "author":self.kwargs['author_id'],
@@ -245,7 +307,10 @@ class CreateCommentModal(PassRequestMixin, generic.CreateView):
         return kwargs
 
     def get_success_url(self):
+        """
+            return the user to movie page containing 
+            the comment they were replying to
+        """
         movie = Movie.objects.get(pk=self.kwargs['movie_id'])
         return "/rate_my_movie_app/movie/" + movie.slug + "/"
-
 

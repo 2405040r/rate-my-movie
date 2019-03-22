@@ -5,3 +5,4 @@
 **/migrations/
 **/media/movie_thumbs/
 **/media/genre_thumbs/
+**templates/registration/base.html
