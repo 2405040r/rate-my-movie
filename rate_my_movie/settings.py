@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'registration',
     'bootstrap_modal_forms',
     'widget_tweaks',
+	'crispy_forms',
 ]
 
 MIDDLEWARE = [
@@ -75,6 +76,9 @@ TEMPLATES = [
         },
     },
 ]
+
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 WSGI_APPLICATION = 'rate_my_movie.wsgi.application'
 
