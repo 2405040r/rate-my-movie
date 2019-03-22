@@ -118,11 +118,9 @@ def sort_comments(comments):
             ret.extend(children_of(child))
         return ret
 
-
     children = {comment:[child for child in comments 
                         if child.parent==comment] 
                 for comment in comments}
-
 
     roots = sorted([comment for comment in comments if is_root(comment)], key=by_time)
 
