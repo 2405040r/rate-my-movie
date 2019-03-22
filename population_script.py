@@ -16,8 +16,12 @@ from rate_my_movie_app.models import UserProfile, Genre, Movie, Comment
 def populate():
     U = namedtuple('U', ['name', 'password', 'picture'])
     users = [
-             U("Quentin", "pass", ""),
-             U("Chris Dickens", "word", "")
+             U("Quentin", "pass", "Password1234"),
+             U("Chris Dickens", "Password12345", ""),
+             U("Nick Cassavetes", "Password12345", ""),
+			 U("Steven Speilberg", "Passwordisthis1", ""),
+			 U("John Carpenter", "Passwordisthisit1", ""),
+			 U("Batman Fan12", "Passwordisthisi1", "")
             ]
 
     users = [_add_user(u) for u in users]
@@ -27,7 +31,10 @@ def populate():
               G("action", "genre_thumbs/action.jpg"),
               G("crime", "genre_thumbs/crime.jpg"),
               G("comedy", "genre_thumbs/comedy.jpg"),
-              G("drama", "genre_thumbs/drama.jpg")
+              G("drama", "genre_thumbs/drama.jpg"),
+			  G("horror", "genre_thumbs/horror.jpg"),
+			  G("romance", "genre_thumbs/romance.jpg"),
+			  G("science fiction", "genre_thumbs/scifi.jpg"),
              ]
     
     genres = [_add_genre(g) for g in genres] 
@@ -48,7 +55,7 @@ def populate():
                 users[0],
                 121310,
                 12300,
-                1130,
+                1275,
                 "An American crime film.",
                 [genres[0], genres[1]],
                 datetime(1994,5,12),
@@ -63,6 +70,46 @@ def populate():
                 [genres[0], genres[1], genres[2]],
                 date(2007,2,16),
                 'movie_thumbs/hot-fuzz.jpg'),
+              M(
+                'The Notebook',
+                users[2],
+                52331,
+                9800,
+                998,
+                "A poor man and rich woman who are in love struggle to make things work as their social differences separate them",
+                [genres[3], genres[5]],
+                date(2004,6,25),
+                'movie_thumbs/the-notebook.jpg'),
+              M(
+                'E.T. the Extra-Terrestrial',
+                users[2],
+                100321,
+                9530,
+                988,
+                "A child tries to help a friendly alien to escape earth to help it return home",
+                [genres[6]],
+                date(1982,12,10),
+                'movie_thumbs/ET.jpg'),
+              M(
+                'Jaws',
+                users[2],
+                131321,
+                9430,
+                968,
+                "A killer shark causes chaos at a beach resort",
+                [genres[0], genres[3]],
+                date(1975,12,26),
+                'movie_thumbs/jaws.jpg'),
+              M(
+                'Halloween',
+                users[3],
+                91321,
+                9630,
+                1068,
+                "15 years after murdering his sister Michael Myers is released from a mental hospital and returns home to kill again",
+                [genres[4]],
+                date(1978,1,25),
+                'movie_thumbs/halloween.jpg'),
              ]
 
     movies = [_add_movie(m) for m in movies]
@@ -79,20 +126,64 @@ def populate():
                          users[0],
                          movies[0],
                          None,
-                         "Sooo good!! *****",
+                         "Sooo good!!",
                          datetime(2019,3,2,12,0,3)),
                      C(
                          users[0],
                          movies[1],
                          None,
-                         "Bad :(",
+                         "This movie was actually so bad :(",
                          datetime(2019,3,2,12,1,0)),
                      C(
                          users[1],
                          movies[0],
                          None,
-                         "A little violent ***",
-                         datetime(2019,3,1,12,0,1))
+                         "A little violent",
+                         datetime(2019,3,1,12,0,1)),
+                     C(
+                         users[1],
+                         movies[2],
+                         None,
+                         "One of my favourite movies!",
+                         datetime(2019,2,3,12,0,3)),
+                     C(
+                         users[4],
+                         movies[2],
+                         None,
+                         "Normally i like scary stuff but this is a really great movie!",
+                         datetime(2019,2,4,7,0,7)),
+                     C(
+                         users[4],
+                         movies[3],
+                         None,
+                         "Not scary enough!",
+                         datetime(2019,1,25,9,0,4)),
+                     C(
+                         users[0],
+                         movies[3],
+                         None,
+                         "Can't believe it took me this long to watch this",
+                         datetime(2018,7,2,9,0,1)),
+                     C(
+                         users[1],
+                         movies[3],
+                         None,
+                         "The special effects were rubbish and ruined the immersion for me so i can't reccomend this",
+                         datetime(2019,1,4,3,0,5)),
+                     C(
+                         users[3],
+                         movies[4],
+                         None,
+                         "Hope you all enjoyed my movie!",
+                         datetime(2018,9,10,1,0,1)),
+                     C(
+                         users[5],
+                         movies[5],
+                         None,
+                         "This movie isn't even half as good as the Dark Night!",
+                         datetime(2019,5,4,5,0,9)),
+
+
                     ]
 
     root_comments = [_add_comment(c) for c in root_comments]
@@ -103,7 +194,13 @@ def populate():
                           movies[0],
                           root_comments[0],
                           "Biased much...",
-                          datetime(2019,3,3,6,5,1))
+                          datetime(2019,3,3,6,5,1)),
+                      C(
+                          users[0],
+                          movies[5],
+                          root_comments[0],
+                          "Don't listen to him I think its awesome!",
+                          datetime(2019,3,3,6,5,1)),
                      ]
 
     child_comments = [_add_comment(c) for c in child_comments]
