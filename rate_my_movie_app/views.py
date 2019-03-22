@@ -45,58 +45,56 @@ def rumours(request):
 	return render(request, 'rate_my_movie_app/rumours.html')
 
 def genres(request):
-        """
-	   Handles display of the genres
-        """
+    """
+	Handles display of the genres
+    """
+    genre_list = Genre.objects.all()
+    context_dict = {'genres': genre_list}
 
-	genre_list = Genre.objects.all()
-	context_dict = {'genres': genre_list}
-
-	return render(request, 'rate_my_movie_app/genres.html', context_dict)
+    return render(request, 'rate_my_movie_app/genres.html', context_dict)
 
 
 @login_required
 def add_movie(request):
-        """
+    """
             ADD MOVIE
 
             Handles user creation of new movies
 
-        """
-	# get the user profile of the user making the request
-        user = UserProfile.objects.filter(user=request.user)[0]
+    """
+    # get the user profile of the user making the request
+    user = UserProfile.objects.filter(user=request.user)[0]
 	
-	form = MovieForm(user=user)
+    form = MovieForm(user=user)
 
-	if request.method == "POST":
-		form = MovieForm(request.POST, user=user)
+    if request.method == "POST":
+        form = MovieForm(request.POST, user=user)
 		
-		# Check the movie does not already exist in the database
-		try:
-			Movie.objects.get(title=request.POST.get('title', 'NULL'))
-			form.add_error(None, "Movie with this title already exists.")
+    # Check the movie does not already exist in the database
+        try:
+            Movie.objects.get(title=request.POST.get('title', 'NULL'))
+            form.add_error(None, "Movie with this title already exists.")
 			
-		except Movie.DoesNotExist:
-			pass
+        except Movie.DoesNotExist:
+            pass
 			
-		if form.is_valid():
-			movie = form.save()
+        if form.is_valid():
+            movie = form.save()
 			
-			# Add the movie thumbnail 
-			if 'thumbnail' in request.FILES:
-				movie.thumbnail = request.FILES['thumbnail']
+            # Add the movie thumbnail 
+            if 'thumbnail' in request.FILES:
+                movie.thumbnail = request.FILES['thumbnail']
 			
-			# Adds all of the chosen genres for the movie to its record
-			for g in form.cleaned_data['genres']:
-				movie.genres.add(g)
+            # Adds all of the chosen genres for the movie to its record
+            for g in form.cleaned_data['genres']:
+                movie.genres.add(g)
+            movie.save()
 			
-			movie.save()
-			
-			#Redirect the user to the most popular page where their movie will now be present
-			return mostpopular(request)
-		else:
-			print(form.errors)
-	return render(
+            #Redirect the user to the most popular page where their movie will now be present
+            return mostpopular(request)
+        else:
+            print(form.errors)
+    return render(
             request, 
             'rate_my_movie_app/add_movie.html',
             {'form': form})
@@ -104,51 +102,48 @@ def add_movie(request):
 
 @login_required
 def add_genre(request):
-"""
-  ADD GENRE
+    """
+        ADD GENRE
 
-  Handles the user creation of new genres
-"""
-	form = GenreForm()
+        Handles the user creation of new genres
+    """
+    form = GenreForm()
 	
-	if request.method == 'POST':
-		form = GenreForm(request.POST)
+    if request.method == 'POST':
+        form = GenreForm(request.POST)
 		
-		#  Ensures the genre does not already exist
-		try:
-			Genre.objects.get(genre=request.POST.get('genre', 'NULL'))
-			form.add_error(None, "This genre already exists.")
+        #  Ensures the genre does not already exist
+        try:
+            Genre.objects.get(genre=request.POST.get('genre', 'NULL'))
+            form.add_error(None, "This genre already exists.")
 
-		except Genre.DoesNotExist:
-			pass
+        except Genre.DoesNotExist:
+            pass # avoids having to indent everything below
 			
 		
-		if form.is_valid():
-			genre = form.save(commit = True)
+        if form.is_valid():
+            genre = form.save(commit = True)
 			
-			#Adds the chosen thumbnail
-			if 'thumbnail' in request.FILES:
-				genre.thumbnail = request.FILES['thumbnail']
-			
-			genre.save()
-			
-			
-			return genres(request)
-		else:
-			print(form.errors)
-	return render(request, 'rate_my_movie_app/add_genre.html', {'form': form})
+            # Adds the chosen thumbnail
+            if 'thumbnail' in request.FILES:
+                genre.thumbnail = request.FILES['thumbnail']
+                genre.save()
+            return genres(request)
+        else:
+            print(form.errors)
+    return render(request, 'rate_my_movie_app/add_genre.html', {'form': form})
 
 
 
 def show_genre(request, genre_name_slug):
-"""
-  SHOW GENRE
+    """
+        SHOW GENRE
 
-  view function renders the selected genre to the user
-"""
+        view function renders the selected genre to the user
+    """
     context_dict = {}
 
-	#Attempt to get the movies to be displayed on the page
+    # Attempt to get the movies to be displayed on the page
     try:
         genre = Genre.objects.get(slug=genre_name_slug)
 
@@ -157,7 +152,7 @@ def show_genre(request, genre_name_slug):
         context_dict['movies'] = movies
         context_dict['genre'] = genre
 	
-	#display a no movies present message
+    # display a no movies present message
     except Genre.DoesNotExist:	
         context_dict['genre'] = None
         context_dict['movies'] = None
@@ -169,7 +164,7 @@ def show_genre(request, genre_name_slug):
 
 
 def sort_comments(comments):
-"""
+    """
   HELPER METHOD
 
   Orders (example below) so that they can be iterated and output in the template
@@ -185,7 +180,7 @@ def sort_comments(comments):
 
   Method will return [ROOT1, CHILD1, GRANDCHILD 1, CHILD 2, ROOT 2, ROOT 3]
 
-"""
+    """
     def by_time(comment):
         return comment.time_stamp
 

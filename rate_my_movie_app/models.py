@@ -32,11 +32,11 @@ class Genre(models.Model):
     thumbnail = models.ImageField(upload_to='genre_thumbs', blank=True)
 	
     def save(self, *args, **kwargs):
-	self.slug = slugify(self.genre)
-	super(Genre,self).save(*args, **kwargs)
+        self.slug = slugify(self.genre)
+        super(Genre,self).save(*args, **kwargs)
 	
     def __str__(self):
-	return f"{self.genre}"
+        return f"{self.genre}"
 
 class Movie(models.Model):
     """
@@ -105,7 +105,7 @@ class Comment(models.Model):
         return indent
 
     def as_padding(self):
-	""" 
+        """ 
             Used to modify the scale of the indent 
         """
         return 50 * self.get_indent_level()
