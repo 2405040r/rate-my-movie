@@ -31,7 +31,7 @@ class MovieForm(forms.ModelForm):
 
     description = forms.CharField(help_text="Enter a brief description.")
     
-    release_date = forms.DateField(help_text="Enter the release date.")
+    release_date = forms.DateField(help_text="Enter the release date, MM/DD/YYYY.")
 
     views = forms.IntegerField(
               widget=forms.HiddenInput(), 
