@@ -114,9 +114,6 @@
 }
 
 
-body{
-	background-image: url("{% static "images/site-background.jpg" %}");	
-}
 
 
 .comments{
